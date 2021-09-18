@@ -4,7 +4,7 @@
 2. As a user, I want to be able to see a description and/or image when I hover over/click on the markers so that I can see what is at the marker location.
 3. As a logged-in user, I want to see what maps others have created and be able to _favourite_(bookmark) the ones I like, so I can find them in the future.
 4. As a logged-in user,I want to **add markers of interest on a map**, each marker with its own **title, descriptions and image**, so that I can add information to customize a map.
-5. As logged-in user, I want to be able to **edit** maps I created, so that I can update my maps.
+5. As logged-in user, I want to be able to **edit** maps, including add/edit/remove markers I created, so that I can update my maps.
 
 6. As logged-in user, I want to see my favourite maps and the maps I have created on my **profile page**, so that I can share my profile with others.
 
