@@ -1,12 +1,10 @@
 $(() => {
-  $.ajax({
-    method: "GET",
-    url: "/api/users",
-  }).done((users) => {
-    for (user of users) {
-      $("<div>").text(user.name).appendTo($("body"));
-    }
-  });
+  let isPopupOpen = false;
+  let currentMarker;
+  const tempMarkerStorage = [];
+  let popupTitle = "";
+  let popupDesc = "";
+  let popupUrl = "";
 
   var mymap = L.map("mapid").setView([51.505, -0.09], 13);
   L.tileLayer(
@@ -18,70 +16,78 @@ $(() => {
       id: "mapbox/streets-v11",
       tileSize: 512,
       zoomOffset: -1,
-      //TODO:
       accessToken:
         "sk.eyJ1IjoiY2dtZW93IiwiYSI6ImNrdHEzdXZ5bDBzcTcyeG8zY3d2eDZtdWIifQ.E0aRLAKw0M-8RLA2DaxicQ",
     }
   ).addTo(mymap);
 
-  let markerReadyStatus = true;
+  mymap.doubleClickZoom.disable();
 
-  let marker;
-  const markers = [];
-  const tempMarkerStorage = [];
+  const onPopupClose = (e) => {
+    const title = $("#marker-editor-title")[0].value;
+    const desc = $("#marker-editor-desc")[0].value;
+    const imgUrl = "#marker-editor-imgUrl"[0].value;
+    tempMarkerStorage.push({
+      title,
+      desc,
+      imgUrl,
+      lng: currentMarker._latlng.lng,
+      lat: currentMarker._latlng.lat,
+      marker_id: currentMarker._icon.id,
+    });
+    $("#marker-editor").trigger("reset");
+    isPopupOpen = false;
+  };
 
-  function onMapClick(e) {
-    if (!markerReadyStatus) {
+  function onMapDblClick(e) {
+    //debugger;
+    //e.originalEvent.stopPropagation();
+    //e.originalEvent.preventDefault();
+    if (isPopupOpen) {
       return;
     }
     const lat = e.latlng.lat;
     const lng = e.latlng.lng;
-    marker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(mymap);
-    marker.bindPopup().openPopup();
-    markerReadyStatus = false;
-
-    $("#popup-form").on("submit", (event) => {
-      event.preventDefault();
-
-      const title = $("#popup-title")[0].value;
-      const desc = $("#popup-description")[0].value;
-      const imgUrl = $("#popup-img-url")[0].value;
-      console.log("title :>> ", title);
-      console.log("desc :>> ", desc);
-      console.log("imgUrl :>> ", imgUrl);
-      marker.closePopup();
-      markers.push(marker);
-      debugger;
-      tempMarkerStorage.push({
-        title,
-        desc,
-        imgUrl,
-        lng: lng,
-        lat: lat,
-      });
-      markerReadyStatus = true;
+    const markerId = Math.floor(Math.random() * 100000000);
+    // console.log(lat, lng, markerId);
+    currentMarker = L.marker([lat, lng]).addTo(mymap);
+    currentMarker.on("popupclose", onPopupClose);
+    currentMarker.on("click", (e) => {
+      console.log("e :>> ", e);
+      currentMarker = e.target;
+      debugger; //TODO: populate marker editor form
     });
-
-    marker.on("click", (e) => {
-      let markerData = tempMarkerStorage.filter((obj) => {
-        marker._latlng.lat === obj.lat && marker._latlng.lng === obj.lng;
-      });
-
-      if (markerData.length !== 1) {
-        alert(`Cannot find marker data! ${JSON.stringify(marker._latlng)}`);
-      }
-
-      markerData = markerData[0];
-
-      marker
-        .bindPopup(
-          `${tempMarkerStorage.title}
-        ${tempMarkerStorage.desc}
-        ${tempMarkerStorage.imgUrl}`
-        )
-        .openPopup();
-    });
+    isPopupOpen = true;
+    currentMarker._icon.id = markerId;
   }
 
-  mymap.on("click", onMapClick);
+  $("#marker-editor-title").on("input", (e) => {
+    const input = $("#marker-editor-title")[0].value;
+    popupTitle = input;
+    let popupHTML = `
+    <h3>${popupTitle}</h3><br>
+    ${popupDesc}`;
+    currentMarker.bindPopup(popupHTML).openPopup();
+  });
+
+  $("#marker-editor-desc").on("input", (e) => {
+    const input = $("#marker-editor-desc")[0].value;
+    popupDesc = input;
+    let popupHTML = `
+    <h3>${popupTitle}</h3><br>
+    ${popupDesc}`;
+    currentMarker.bindPopup(popupHTML).openPopup();
+  });
+
+  $("#marker-editor-url").on("input", (e) => {
+    const input = $("#marker-editor-url")[0].value;
+    popupDesc = input;
+    let popupHTML = `
+    <h3>${popupTitle}</h3><br>
+    ${popupDesc}<br>
+    <img src="${popupUrl}""`;
+    currentMarker.bindPopup(popupHTML).openPopup();
+  });
+
+  mymap.on("dblclick", onMapDblClick);
 });
