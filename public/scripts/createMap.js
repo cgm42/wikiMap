@@ -76,6 +76,7 @@ $(() => {
     currentMarker._icon.id = markerId;
   }
 
+  //sync typing in popup and editor for title
   $("#marker-editor-title").on("input", (e) => {
     const input = $("#marker-editor-title")[0].value;
     popupTitle = input;
@@ -85,6 +86,7 @@ $(() => {
     currentMarker.bindPopup(popupHTML).openPopup();
   });
 
+  //sync typing in popup and editor for desc
   $("#marker-editor-desc").on("input", (e) => {
     const input = $("#marker-editor-desc")[0].value;
     popupDesc = input;
@@ -94,6 +96,7 @@ $(() => {
     currentMarker.bindPopup(popupHTML).openPopup();
   });
 
+  //doesn't really work for imgurl
   $("#marker-editor-url").on("input", (e) => {
     const input = $("#marker-editor-url")[0].value;
     popupDesc = input;
