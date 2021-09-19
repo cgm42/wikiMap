@@ -39,24 +39,39 @@ $(() => {
     isPopupOpen = false;
   };
 
+  const onMarkerClick = (e) => {
+    popupTitle = "";
+    popupDesc = "";
+    popupUrl = "";
+
+    currentMarker = e.target;
+    const titleText = e.target._popup._contentNode.firstElementChild.innerText;
+    const descText =
+      e.target._popup._contentNode.firstElementChild.nextSibling.nextSibling.data.trim();
+    $("#marker-editor-title")[0].value = titleText;
+    $("#marker-editor-desc")[0].value = descText;
+    debugger;
+  };
+
+  //create a marker on dblclick
   function onMapDblClick(e) {
-    //debugger;
-    //e.originalEvent.stopPropagation();
-    //e.originalEvent.preventDefault();
     if (isPopupOpen) {
       return;
     }
+    popupTitle = "";
+    popupDesc = "";
+    popupUrl = "";
     const lat = e.latlng.lat;
     const lng = e.latlng.lng;
     const markerId = Math.floor(Math.random() * 100000000);
-    // console.log(lat, lng, markerId);
     currentMarker = L.marker([lat, lng]).addTo(mymap);
+
+    //save content on popup close
     currentMarker.on("popupclose", onPopupClose);
-    currentMarker.on("click", (e) => {
-      console.log("e :>> ", e);
-      currentMarker = e.target;
-      debugger; //TODO: populate marker editor form
-    });
+
+    //select a marker on click
+    currentMarker.on("click", onMarkerClick);
+
     isPopupOpen = true;
     currentMarker._icon.id = markerId;
   }
