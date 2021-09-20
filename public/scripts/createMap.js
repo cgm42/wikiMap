@@ -1,7 +1,7 @@
 $(() => {
   let isPopupOpen = false;
   let currentMarker;
-  const tempMarkerStorage = [];
+  const tempMarkerStorage = []; //for dev only, to be deleted
   let popupTitle = "";
   let popupDesc = "";
   let popupUrl = "";
@@ -39,8 +39,8 @@ $(() => {
     isPopupOpen = false;
   };
 
+  //populate editor with existing value when marker is clicked
   const onMarkerClick = (e) => {
-    // Move later
     currentMarker = e.target;
     popupTitle = e.target._popup._contentNode.firstElementChild.innerText;
     popupDesc =
@@ -49,7 +49,6 @@ $(() => {
     $("#marker-editor-title")[0].value = popupTitle;
     $("#marker-editor-desc")[0].value = popupDesc;
     $("#marker-editor-imgUrl")[0].value = popupUrl;
-    debugger;
   };
 
   //create a marker on dblclick
@@ -62,6 +61,7 @@ $(() => {
     popupUrl = "";
     const lat = e.latlng.lat;
     const lng = e.latlng.lng;
+    //generate a random markerId for temp use
     const markerId = Math.floor(Math.random() * 100000000);
     currentMarker = L.marker([lat, lng]).addTo(mymap);
 
