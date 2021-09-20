@@ -14,7 +14,7 @@ module.exports = (db) => {
               "INSERT INTO users (user_name, password, avatar_url) VALUES ($1, $2, $3) RETURNING *",
               [
                 req.params.username,
-                "password",
+                "$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u",
                 "https://robohash.org/etconsecteturalias.png?size=50x50&set=set1",
               ]
             )
