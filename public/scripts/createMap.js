@@ -26,7 +26,7 @@ $(() => {
   const onPopupClose = (e) => {
     const title = $("#marker-editor-title")[0].value;
     const desc = $("#marker-editor-desc")[0].value;
-    const imgUrl = "#marker-editor-imgUrl"[0].value;
+    const imgUrl = $("#marker-editor-imgUrl")[0].value;
     tempMarkerStorage.push({
       title,
       desc,
@@ -40,16 +40,15 @@ $(() => {
   };
 
   const onMarkerClick = (e) => {
-    popupTitle = "";
-    popupDesc = "";
-    popupUrl = "";
-
+    // Move later
     currentMarker = e.target;
-    const titleText = e.target._popup._contentNode.firstElementChild.innerText;
-    const descText =
+    popupTitle = e.target._popup._contentNode.firstElementChild.innerText;
+    popupDesc =
       e.target._popup._contentNode.firstElementChild.nextSibling.nextSibling.data.trim();
-    $("#marker-editor-title")[0].value = titleText;
-    $("#marker-editor-desc")[0].value = descText;
+    popupUrl = e.target._popup._contentNode.getElementsByTagName("img")[0].src;
+    $("#marker-editor-title")[0].value = popupTitle;
+    $("#marker-editor-desc")[0].value = popupDesc;
+    $("#marker-editor-imgUrl")[0].value = popupUrl;
     debugger;
   };
 
@@ -76,35 +75,33 @@ $(() => {
     currentMarker._icon.id = markerId;
   }
 
-  //sync typing in popup and editor for title
-  $("#marker-editor-title").on("input", (e) => {
-    const input = $("#marker-editor-title")[0].value;
-    popupTitle = input;
+  const updateMarkerHTML = (marker) => {
     let popupHTML = `
     <h3>${popupTitle}</h3><br>
-    ${popupDesc}`;
-    currentMarker.bindPopup(popupHTML).openPopup();
+    ${popupDesc}<br>
+    <img src="${popupUrl}"/>`;
+    marker.bindPopup(popupHTML).openPopup();
+  };
+
+  //sync typing in popup and editor for title
+  $("#marker-editor-title").on("input", (e) => {
+    const input = e.target.value;
+    popupTitle = input;
+    updateMarkerHTML(currentMarker);
   });
 
   //sync typing in popup and editor for desc
   $("#marker-editor-desc").on("input", (e) => {
     const input = $("#marker-editor-desc")[0].value;
     popupDesc = input;
-    let popupHTML = `
-    <h3>${popupTitle}</h3><br>
-    ${popupDesc}`;
-    currentMarker.bindPopup(popupHTML).openPopup();
+    updateMarkerHTML(currentMarker);
   });
 
-  //doesn't really work for imgurl
-  $("#marker-editor-url").on("input", (e) => {
-    const input = $("#marker-editor-url")[0].value;
-    popupDesc = input;
-    let popupHTML = `
-    <h3>${popupTitle}</h3><br>
-    ${popupDesc}<br>
-    <img src="${popupUrl}""`;
-    currentMarker.bindPopup(popupHTML).openPopup();
+  //sync image in popup
+  $("#marker-editor-imgUrl").on("input", (e) => {
+    const input = $("#marker-editor-imgUrl")[0].value;
+    popupUrl = input;
+    updateMarkerHTML(currentMarker);
   });
 
   mymap.on("dblclick", onMapDblClick);
