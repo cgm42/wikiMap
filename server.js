@@ -1,5 +1,5 @@
 // load .env data into process.env
-require('dotenv').config();
+require("dotenv").config();
 
 // Web server config
 const PORT = process.env.PORT || 8080;
@@ -21,16 +21,25 @@ const db = require('./lib/db.js');
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
-app.use(morgan('dev'));
+app.use(morgan("dev"));
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use("/styles", sass({
-  src: __dirname + "/styles",
-  dest: __dirname + "/public/styles",
-  debug: true,
-  outputStyle: 'expanded'
-}));
+app.use(
+  "/styles",
+  sass({
+    src: __dirname + "/styles",
+    dest: __dirname + "/public/styles",
+    debug: true,
+    outputStyle: "expanded",
+  })
+);
+app.use(
+  cookieSession({
+    name: "session",
+    keys: ["midterm"],
+  })
+);
 app.use(express.static("public"));
 
 app.use(cookieSession({
@@ -45,6 +54,7 @@ const widgetsRoutes = require("./routes/widgets");
 const mapsRoutes = require("./routes/maps_router");
 const favouritesRoutes = require("./routes/favourites_router");
 const userRoutes = require("./routes/users_router");
+const loginRoutes = require("./routes/login");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -54,13 +64,17 @@ app.use("/maps", mapsRoutes);
 app.use("/favourites", favouritesRoutes);
 app.use("/profile", userRoutes);
 // Note: mount other resources here, using the same pattern above
-
+app.use("/login", loginRoutes(db));
 
 // Home page
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 app.get("/", (req, res) => {
   res.render("index");
+});
+
+app.get("/create", (req, res) => {
+  res.render("create");
 });
 
 app.listen(PORT, () => {

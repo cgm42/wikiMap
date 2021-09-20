@@ -36,100 +36,30 @@
                 <tr>
                   <th scope="col">Public Maps</th>
                 </tr>
-                <tr>
-                  <!--Grid row-->
-                  <div class="row">
-                    <!--Grid column-->
-                    <div class="col-md-6 mb-4">
-                      <!--Card-->
-                      <div class="card card-cascade narrower">
-                        <!--Card image-->
-                        <div
-                          class="
-                            view view-cascade
-                            gradient-card-header
-                            blue-gradient
-                          "
-                        >
-                          <h5 class="mb-0">Regular map</h5>
-                        </div>
-                        <!--/Card image-->
-
-                        <!--Card content-->
-                        <div class="card-body card-body-cascade text-center">
-                          <!--Google map-->
-                          <div
-                            id="map-container-google-8"
-                            class="z-depth-1-half map-container-5"
-                            style="height: 300px"
-                          >
-                            <iframe
-                              src="https://www.google.ca/maps/@<%=maps[0]['longitude']%>,-<%=maps[0]['latitude']%>z"
-                              frameborder="0"
-                              style="border: 0"
-                              allowfullscreen
-                            ></iframe>
-                          </div>
-                        </div>
-                        <!--/.Card content-->
-                      </div>
-                      <!--/.Card-->
-                    </div>
-                    <!--Grid column-->
-
-                    <!--Grid column-->
-                    <div class="col-md-6 mb-4">
-                      <!--Card-->
-                      <div class="card card-cascade narrower">
-                        <!--Card image-->
-                        <div
-                          class="
-                            view view-cascade
-                            gradient-card-header
-                            peach-gradient
-                          "
-                        >
-                          <h5 class="mb-0">Custom map</h5>
-                        </div>
-                        <!--/Card image-->
-
-                        <!--Card content-->
-                        <div class="card-body card-body-cascade text-center">
-                          <!--Google map-->
-                          <div
-                            id="map-container-google-9"
-                            class="z-depth-1-half map-container-5"
-                            style="height: 300px"
-                          >
-                            <iframe
-                              src="https://www.openstreetmap.org/#map=17/49.21044/-123.11882"
-                              frameborder="0"
-                              style="border: 0"
-                              allowfullscreen
-                            ></iframe>
-                          </div>
-                        </div>
-                        <!--/.Card content-->
-                      </div>
-                      <!--/.Card-->
-                    </div>
-                    <!--Grid column-->
-                  </div>
-                  <!--Grid row-->
-                </tr>
-                <!-- <tr>
-                  <th scope="col">Favourite Maps</th>
-                </tr> -->
               </thead>
               <tbody>
-                <% for(let map in maps) { %> <%if (user['id'] ===
-                maps['creator_id']) { %>
+                <% for(let map in maps) { %> <% if (maps[map].creator_id ===
+                user.id) {%>
                 <tr>
-                  <td><%= map %></td>
-                  <td><%= maps %></td>
-                  <td><%= maps[map].title %></td>
+                  <td><a href="/create/:id"><%= maps[map].title %></a></td>
                 </tr>
                 <% } %> <% } %>
+              </tbody>
+            </table>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Favourite Maps</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% for(let fav in favourites) { %>
+                <tr>
+                  <td>
+                    <a href="/create/:id"><%= favourites[fav].title %></a>
+                  </td>
+                </tr>
+                <% } %>
               </tbody>
             </table>
           </div>

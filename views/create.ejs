@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Home Page</title>
+
+    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+    <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/create.css" type="text/css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- Tailwind -->
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <!-- JQuery -->
+    <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+    <script type="text/javascript" src="/scripts/createMap.js"></script>
+    <!-- LEAFLET -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+      integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+      crossorigin=""
+    />
+    <script
+      src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+      integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+      crossorigin=""
+    ></script>
+  </head>
+
+  <body>
+    <h1>Create map</h1>
+    <div class="create-container">
+      <div id="mapid"></div>
+
+<!-- TODO: Separate into a different component -->
+      <div class="edit-panel">
+        <div class="btn-group" role="group" aria-label="Basic example">
+          <button type="button" class="btn btn-secondary">Map</button>
+          <button type="button" class="btn btn-secondary">Marker</button>
+          <button type="button" class="btn btn-secondary">Basemap</button>
+        </div>
+
+        <form id='map-editor'>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Title</label>
+            <input type="text" class="form-control" placeholder="Enter an interesting title">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Description</label>
+            <input type="text" class="form-control" placeholder="A detailed description">
+          </div>
+
+        </form>
+<br>
+        <h6>Marker Editor</h6>
+
+        <form id='marker-editor'>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Title</label>
+            <input id='marker-editor-title' type="text" class="form-control" placeholder="Enter an interesting title">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Description</label>
+            <input id='marker-editor-desc' type="text" class="form-control" placeholder="A detailed description">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Image Url</label>
+            <input id='marker-editor-imgUrl' type="text" class="form-control" placeholder="Link to a cat GIF">
+          </div>
+        </form>
+
+
+
+      </div>
+      </form>
+    </div>
+  </body>
+</html>
