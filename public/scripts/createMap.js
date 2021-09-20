@@ -27,6 +27,7 @@ $(() => {
     const title = $("#marker-editor-title")[0].value;
     const desc = $("#marker-editor-desc")[0].value;
     const imgUrl = $("#marker-editor-imgUrl")[0].value;
+
     tempMarkerStorage.push({
       title,
       desc,
@@ -106,4 +107,10 @@ $(() => {
   });
 
   mymap.on("dblclick", onMapDblClick);
+
+  $("#delete-map-button").on("click", (e) => {
+    e.preventDefault();
+    console.log("mymap :>> ", mymap);
+    console.log("tempMarkerStorage :>> ", tempMarkerStorage);
+  });
 });

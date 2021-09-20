@@ -8,7 +8,16 @@ module.exports = (db) => {
       `INSERT INTO maps (creator_id, title, description,
                         longitude, latitude, isPublic, created_on, zoom_level)
                         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
-      [req.params.username] //TODO:
+      [
+        creator_id,
+        title,
+        description,
+        longitude,
+        latitude,
+        isPublic,
+        created_on,
+        zoom_level,
+      ] //TODO:
     )
       .then((row) => {
         req.session.user_id = row.id;
