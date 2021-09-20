@@ -1,3 +1,5 @@
+const map = require("../../routes/map");
+
 $(() => {
   let isPopupOpen = false;
   let currentMarker;
@@ -5,8 +7,12 @@ $(() => {
   let popupTitle = "";
   let popupDesc = "";
   let popupUrl = "";
+  let mapId;
+  let long = 13.405;
+  let lat = 52.52;
 
-  var mymap = L.map("mapid").setView([51.505, -0.09], 13);
+  var mymap = L.map("mapid");
+  mymap.locate({ setView: true, maxZoom: 12 });
   L.tileLayer(
     "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
     {
@@ -107,6 +113,31 @@ $(() => {
   });
 
   mymap.on("dblclick", onMapDblClick);
+
+  $("#save-map-button").on("click", (e) => {
+    e.preventDefault();
+    console.log("mymap :>> ", mymap);
+    console.log("tempMarkerStorage :>> ", tempMarkerStorage);
+
+    const title = $("#map-editor-title")[0].value;
+    const desc = $("#map-editor-desc")[0].value;
+    const lat = mymap.getBounds().getCenter().lat;
+    const lng = mymap.getBounds().getCenter().lng;
+    const zoom = mymap._zoom;
+    const isPublic = true;
+
+    $.ajax({
+      url: "/maps",
+      type: "post",
+      data: { lat, lng, zoom, title, desc, isPublic },
+      success: (data) => {
+        mapId = data.id;
+      },
+      error: () => {
+        console.log("error");
+      },
+    });
+  });
 
   $("#delete-map-button").on("click", (e) => {
     e.preventDefault();
