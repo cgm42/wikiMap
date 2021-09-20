@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
+      crossorigin="anonymous"
+    />
+    <title>Profile - WikiMap</title>
+  </head>
+  <body>
+    <main>
+      <section>
+        <div>
+          <div class="col-md-3 border-right">
+            <div
+              class="d-flex flex-column align-items-center text-center p-3 py-5"
+            >
+              <img
+                class="rounded-circle mt-5"
+                width="150px"
+                src="<%= user.avatar_url%>"
+              /><span class="font-weight-bold"><%= user.user_name%></span>
+            </div>
+          </div>
+        </div>
+        <article>
+          <div>
+            <!-- <h3>Public Maps</h3> -->
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Public Maps</th>
+                </tr>
+                <tr>
+                  <!--Grid row-->
+                  <div class="row">
+                    <!--Grid column-->
+                    <div class="col-md-6 mb-4">
+                      <!--Card-->
+                      <div class="card card-cascade narrower">
+                        <!--Card image-->
+                        <div
+                          class="
+                            view view-cascade
+                            gradient-card-header
+                            blue-gradient
+                          "
+                        >
+                          <h5 class="mb-0">Regular map</h5>
+                        </div>
+                        <!--/Card image-->
+
+                        <!--Card content-->
+                        <div class="card-body card-body-cascade text-center">
+                          <!--Google map-->
+                          <div
+                            id="map-container-google-8"
+                            class="z-depth-1-half map-container-5"
+                            style="height: 300px"
+                          >
+                            <iframe
+                              src="https://www.google.ca/maps/@<%=maps[0]['longitude']%>,-<%=maps[0]['latitude']%>z"
+                              frameborder="0"
+                              style="border: 0"
+                              allowfullscreen
+                            ></iframe>
+                          </div>
+                        </div>
+                        <!--/.Card content-->
+                      </div>
+                      <!--/.Card-->
+                    </div>
+                    <!--Grid column-->
+
+                    <!--Grid column-->
+                    <div class="col-md-6 mb-4">
+                      <!--Card-->
+                      <div class="card card-cascade narrower">
+                        <!--Card image-->
+                        <div
+                          class="
+                            view view-cascade
+                            gradient-card-header
+                            peach-gradient
+                          "
+                        >
+                          <h5 class="mb-0">Custom map</h5>
+                        </div>
+                        <!--/Card image-->
+
+                        <!--Card content-->
+                        <div class="card-body card-body-cascade text-center">
+                          <!--Google map-->
+                          <div
+                            id="map-container-google-9"
+                            class="z-depth-1-half map-container-5"
+                            style="height: 300px"
+                          >
+                            <iframe
+                              src="https://www.openstreetmap.org/#map=17/49.21044/-123.11882"
+                              frameborder="0"
+                              style="border: 0"
+                              allowfullscreen
+                            ></iframe>
+                          </div>
+                        </div>
+                        <!--/.Card content-->
+                      </div>
+                      <!--/.Card-->
+                    </div>
+                    <!--Grid column-->
+                  </div>
+                  <!--Grid row-->
+                </tr>
+                <!-- <tr>
+                  <th scope="col">Favourite Maps</th>
+                </tr> -->
+              </thead>
+              <tbody>
+                <% for(let map in maps) { %> <%if (user['id'] ===
+                maps['creator_id']) { %>
+                <tr>
+                  <td><%= map %></td>
+                  <td><%= maps %></td>
+                  <td><%= maps[map].title %></td>
+                </tr>
+                <% } %> <% } %>
+              </tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>
