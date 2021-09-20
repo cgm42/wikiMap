@@ -1,0 +1,16 @@
+#mapid {
+  height: 800px;
+  width: 100%;
+}
+#popup-form {
+  background-color: aqua;
+}
+
+.edit-panel {
+  height: 600px;
+  background-color: aquamarine;
+}
+
+.create-container {
+  display: flex;
+}
