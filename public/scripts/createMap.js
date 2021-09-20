@@ -75,6 +75,7 @@ $(() => {
     currentMarker._icon.id = markerId;
   }
 
+  //bind a popup with updated html to marker
   const updateMarkerHTML = (marker) => {
     let popupHTML = `
     <h3>${popupTitle}</h3><br>
@@ -92,14 +93,14 @@ $(() => {
 
   //sync typing in popup and editor for desc
   $("#marker-editor-desc").on("input", (e) => {
-    const input = $("#marker-editor-desc")[0].value;
+    const input = e.target.value;
     popupDesc = input;
     updateMarkerHTML(currentMarker);
   });
 
   //sync image in popup
   $("#marker-editor-imgUrl").on("input", (e) => {
-    const input = $("#marker-editor-imgUrl")[0].value;
+    const input = e.target.value;
     popupUrl = input;
     updateMarkerHTML(currentMarker);
   });
