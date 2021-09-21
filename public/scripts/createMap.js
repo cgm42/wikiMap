@@ -1,6 +1,8 @@
 $(() => {
   let isPopupOpen = false; //create new marker only allowed if false
   let currentMarker;
+  let mapTitle = "";
+  let mapDesc = "";
   let popupTitle = "";
   let popupDesc = "";
   let popupUrl = "";
@@ -24,6 +26,35 @@ $(() => {
 
   mymap.doubleClickZoom.disable();
 
+  $("#myModalHorizontal").modal("show");
+
+  $("#create-map-button").on("click", (e) => {
+    e.preventDefault();
+    mapTitle = $("#new-map-title")[0].value;
+    mapDesc = $("#new-map-desc")[0].value;
+    debugger;
+    const lat = mymap.getBounds().getCenter().lat;
+    const lng = mymap.getBounds().getCenter().lng;
+    const zoom = mymap._zoom;
+    const isPublic = true; //TODO:
+
+    $.ajax({
+      url: "/maps",
+      type: "post",
+      data: { lat, lng, zoom, title: mapTitle, desc: mapDesc, isPublic },
+      success: (data) => {
+        mapId = data.id;
+        $("#myModalHorizontal").modal("hide");
+        $("#map-editor-title")[0].value = mapTitle;
+        $("#map-editor-desc")[0].value = mapDesc;
+      },
+      error: () => {
+        console.log("error");
+      },
+    });
+  });
+
+  //Save marker on popup close
   const onPopupClose = (e) => {
     const title = $("#marker-editor-title")[0].value;
     const desc = $("#marker-editor-desc")[0].value;
@@ -105,15 +136,15 @@ $(() => {
     //generate a random markerId for temp use
     //const markerId = Math.floor(Math.random() * 100000000);
     currentMarker = L.marker([lat, lng]).addTo(mymap);
-
     //save content on popup close
     currentMarker.on("popupclose", onPopupClose);
-
     //select a marker on click
     currentMarker.on("click", onMarkerClick);
-
     isPopupOpen = true;
     //currentMarker._icon.id = markerId;
+    //toggle marker editor
+    $(".toggle-form, .formwrap, .toggle-bg").addClass("active");
+    $("#marker-editor").removeClass("inactive");
   }
 
   //bind a popup with updated html to marker
@@ -162,10 +193,12 @@ $(() => {
 
     $.ajax({
       url: "/maps",
-      type: "post",
+      type: "post", //TODO: update to put
       data: { lat, lng, zoom, title, desc, isPublic },
       success: (data) => {
         mapId = data.id;
+        $("#map-editor-title")[0].value = mapTitle;
+        $("#map-editor-desc")[0].value = mapDesc;
       },
       error: () => {
         console.log("error");
