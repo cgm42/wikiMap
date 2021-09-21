@@ -36,7 +36,14 @@
 }
 
 .btn {
-  width: 100px;
-  border-radius: 100px 100px 100px 100px;
   align-self: flex-end;
+}
+
+.viewbtn {
+  width: 200%;
+  border-radius: 100px 100px 100px 100px;
+}
+
+.avatar-img {
+  border: 3px solid #ccc;
 }
