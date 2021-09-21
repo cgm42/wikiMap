@@ -28,11 +28,12 @@ router.get('/:map_id', (req, res) => {
     });
 });
 
+
+// POST /:map_id/delete
 router.post('/:map_id/delete', (req, res) => {
   const userID = req.session.user_id;
   mapQueries.removeMapById(req.params.map_id)
     .then(dbres => {
-      console.log(userID)
       res.redirect(`/profile/${userID}`);
 
     })
