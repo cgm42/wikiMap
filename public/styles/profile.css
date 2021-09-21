@@ -1,0 +1,42 @@
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.row > div[class*="col-"] {
+  display: flex;
+}
+
+.card-text,
+.card-title {
+  padding-right: 0.7em;
+  padding-left: 0.7em;
+  padding-top: 0.7em;
+}
+
+.card-text {
+  height: 100px;
+}
+
+.card {
+  display: flex;
+  justify-content: start;
+  min-height: 300px;
+  max-width: 300px;
+  margin-bottom: 0.5em;
+}
+
+.btn-group {
+  align-self: flex-end;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin: 0.7em;
+}
+
+.btn {
+  width: 100px;
+  border-radius: 100px 100px 100px 100px;
+  align-self: flex-end;
+}
