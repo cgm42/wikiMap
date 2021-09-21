@@ -28,4 +28,16 @@ router.get('/:favourite_id', (req, res) => {
     });
 });
 
+// POST /:favourite_id/delete
+router.post('/:favourite_id/delete', (req, res) => {
+  const userID = req.session.user_id;
+
+  favQueries.removeFavouriteById(req.params.favourite_id)
+    .then(dbres => {
+      res.redirect(`/profile/${userID}`);
+
+    })
+})
+
+
 module.exports = router;
