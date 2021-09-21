@@ -42,7 +42,6 @@ $(() => {
         data: { mapId, title, desc, imgUrl, lat, lng },
         success: (data) => {
           currentMarker._icon.id = data.id;
-          alert("marker saved to db! make another one!");
           isPopupOpen = false;
         },
         error: () => {
@@ -56,7 +55,6 @@ $(() => {
         type: "put",
         data: { title, desc, imgUrl },
         success: (data) => {
-          alert("marker updated! make another one!");
           isPopupOpen = false;
         },
         error: () => {
@@ -156,7 +154,6 @@ $(() => {
       data: { lat, lng, zoom, title, desc, isPublic },
       success: (data) => {
         mapId = data.id;
-        alert("Map saved to db, ready to create markers!");
       },
       error: () => {
         console.log("error");
