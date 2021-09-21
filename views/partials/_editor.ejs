@@ -1,0 +1,77 @@
+<!--
+
+
+  <h6>Marker Editor</h6>
+
+  <form id='marker-editor'>
+    <div class="form-group">
+      <label for="exampleInputEmail1">Title</label>
+      <input id='marker-editor-title' type="text" class="form-control" placeholder="Enter an interesting title">
+    </div>
+    <div class="form-group">
+      <label for="exampleInputPassword1">Description</label>
+      <input id='marker-editor-desc' type="text" class="form-control" placeholder="A detailed description">
+    </div>
+    <div class="form-group">
+      <label for="exampleInputPassword1">Image Url</label>
+      <input id='marker-editor-imgUrl' type="text" class="form-control" placeholder="Link to a cat GIF">
+    </div>
+  </form>
+
+  <button id='delete-marker-button' type="button" class="btn btn-secondary">Delete Marker</button>
+
+</div>
+</form> -->
+
+<div class="edit-panel">
+  <div class="btn-container">
+    <div class="btn-group" role="group" aria-label="Basic example">
+      <button type="button" class="btn btn-secondary map-button">Map</button>
+      <button type="button" class="btn btn-secondary marker-button">
+        Marker
+      </button>
+      <button type="button" class="btn btn-secondary basemap-button">
+        Basemap
+      </button>
+    </div>
+  </div>
+  <section class="toggle-form">
+    <div class="formwrap px-4">
+      <div class="icon-close pos-a">
+        <img
+          src="https://www.solodev.com/_/images/cross.png"
+          alt="Close Button"
+        />
+      </div>
+
+      <form id="map-editor">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Title</label>
+          <input
+            id="map-editor-title"
+            type="text"
+            class="form-control"
+            placeholder="Enter an interesting title"
+          />
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <input
+            id="map-editor-desc"
+            type="text"
+            class="form-control"
+            placeholder="A detailed description"
+          />
+        </div>
+      </form>
+      <button id="save-map-button" type="button" class="btn btn-secondary">
+        Save
+      </button>
+      <button id="delete-map-button" type="button" class="btn btn-secondary">
+        Delete Map
+      </button>
+      <br />
+    </div>
+    <div class="toggle-bg"></div>
+  </section>
+</div>

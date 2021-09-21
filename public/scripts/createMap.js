@@ -171,4 +171,19 @@ $(() => {
   $("#delete-marker-button").on("click", (e) => {
     //TODO:
   });
+
+  // slider control
+  $(".map-button").on("click", function () {
+    if (!$(".toggle-form, .formwrap, .toggle-bg").hasClass("active")) {
+      $(".toggle-form, .formwrap, .toggle-bg").addClass("active");
+      $(".icon-close").addClass("open");
+    } else {
+      $(".toggle-form, .formwrap, .toggle-bg").removeClass("active");
+    }
+  });
+
+  $(".icon-close").on("click", function () {
+    $(".toggle-form, .formwrap, .toggle-bg").removeClass("active");
+    $(".icon-close").removeClass("open");
+  });
 });

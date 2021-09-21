@@ -6,7 +6,12 @@
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
     <link rel="stylesheet" href="/styles/create.css" type="text/css" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
     <!-- JQuery -->
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <link rel="stylesheet" href="/styles/header.css" type="text/css" />
@@ -31,60 +36,19 @@
     <div class="create-container">
       <div id="mapid"></div>
 
-<!-- TODO: Separate into a different component -->
-      <div class="edit-panel">
-        <div class="btn-group" role="group" aria-label="Basic example">
-          <button type="button" class="btn btn-secondary">Map</button>
-          <button type="button" class="btn btn-secondary">Marker</button>
-          <button type="button" class="btn btn-secondary">Basemap</button>
-        </div>
-
-        <form id='map-editor'>
-          <div class="form-group">
-            <label for="exampleInputEmail1">Title</label>
-            <input id='map-editor-title' type="text" class="form-control" placeholder="Enter an interesting title">
-          </div>
-          <div class="form-group">
-            <label for="exampleInputPassword1">Description</label>
-            <input id='map-editor-desc'type="text" class="form-control" placeholder="A detailed description">
-          </div>
-        </form>
-        <button id='save-map-button' type="button" class="btn btn-secondary">Save</button>
-        <button id='delete-map-button' type="button" class="btn btn-secondary">Delete Map</button>
-<br>
-        <h6>Marker Editor</h6>
-
-        <form id='marker-editor'>
-          <div class="form-group">
-            <label for="exampleInputEmail1">Title</label>
-            <input id='marker-editor-title' type="text" class="form-control" placeholder="Enter an interesting title">
-          </div>
-          <div class="form-group">
-            <label for="exampleInputPassword1">Description</label>
-            <input id='marker-editor-desc' type="text" class="form-control" placeholder="A detailed description">
-          </div>
-          <div class="form-group">
-            <label for="exampleInputPassword1">Image Url</label>
-            <input id='marker-editor-imgUrl' type="text" class="form-control" placeholder="Link to a cat GIF">
-          </div>
-        </form>
-
-        <button id='delete-marker-button' type="button" class="btn btn-secondary">Delete Marker</button>
-
-      </div>
-      </form>
+      <%- include('partials/_editor') %>
     </div>
   </body>
   <%- include('partials/_header') %>
-    <!--  Bootstrap JSS -->
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-      crossorigin="anonymous"
-    ></script>
+  <!--  Bootstrap JSS -->
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"
+  ></script>
 </html>
