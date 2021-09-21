@@ -28,4 +28,14 @@ router.get('/:map_id', (req, res) => {
     });
 });
 
+router.post('/:map_id/delete', (req, res) => {
+  const userID = req.session.user_id;
+  mapQueries.removeMapById(req.params.map_id)
+    .then(dbres => {
+      console.log(userID)
+      res.redirect(`/profile/${userID}`);
+
+    })
+})
+
 module.exports = router;

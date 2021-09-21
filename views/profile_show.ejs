@@ -52,17 +52,22 @@
                     role="group"
                     aria-label="Basic example"
                   >
-                    <a
-                      href="/create/:id"
-                      class="btn btn-primary justify-content-start"
-                      >More</a
-                    >
-                    <a
-                      href="/:map_id/delete"
-                      class="btn btn-secondary justify-content-end"
-                    >
-                      Delete</a
-                    >
+                    <form method="GET" action="/maps/<%=maps[map].id%>">
+                      <button
+                        type="submit"
+                        class="btn btn-primary justify-content-start"
+                      >
+                        View
+                      </button>
+                    </form>
+                    <form method="POST" action="/maps/<%=maps[map].id%>/delete">
+                      <button
+                        type="submit"
+                        class="btn btn-secondary justify-content-end"
+                      >
+                        Delete
+                      </button>
+                    </form>
                   </div>
                 </div>
               </div>
@@ -108,6 +113,22 @@
               </div>
               <% } %>
             </div>
+            <iframe
+              width="425"
+              height="350"
+              frameborder="0"
+              scrolling="no"
+              marginheight="0"
+              marginwidth="0"
+              src="https://www.openstreetmap.org/export/embed.html?bbox=-123.13337087631227%2C49.20671957344764%2C-123.105046749115%2C49.21920890689246&amp;layer=mapnik&amp;marker=49.21296463459537%2C-123.11920881271362"
+              style="border: 1px solid black"
+            ></iframe
+            ><br /><small
+              ><a
+                href="https://www.openstreetmap.org/?mlat=49.2130&amp;mlon=-123.1192#map=16/49.2130/-123.1192&amp;layers=N"
+                >View Larger Map</a
+              ></small
+            >
           </div>
         </article>
       </section>
