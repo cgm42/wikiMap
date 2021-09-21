@@ -1,9 +1,6 @@
-const map = require("../../routes/map");
-
 $(() => {
-  let isPopupOpen = false;
+  let isPopupOpen = false; //create new marker only allowed if F
   let currentMarker;
-  const tempMarkerStorage = []; //for dev only, to be deleted
   let popupTitle = "";
   let popupDesc = "";
   let popupUrl = "";
@@ -33,17 +30,40 @@ $(() => {
     const title = $("#marker-editor-title")[0].value;
     const desc = $("#marker-editor-desc")[0].value;
     const imgUrl = $("#marker-editor-imgUrl")[0].value;
-
-    tempMarkerStorage.push({
-      title,
-      desc,
-      imgUrl,
-      lng: currentMarker._latlng.lng,
-      lat: currentMarker._latlng.lat,
-      marker_id: currentMarker._icon.id,
-    });
+    const lat = currentMarker.getLatLng().lat;
+    const lng = currentMarker.getLatLng().lng;
+    console.log(currentMarker._icon.id);
     $("#marker-editor").trigger("reset");
-    isPopupOpen = false;
+    // Save new marker to db if no marker id
+    if (currentMarker._icon.id.length === 0) {
+      return $.ajax({
+        url: "markers",
+        type: "post",
+        data: { mapId, title, desc, imgUrl, lat, lng },
+        success: (data) => {
+          currentMarker._icon.id = data.id;
+          alert("marker saved to db! make another one!");
+          isPopupOpen = false;
+        },
+        error: () => {
+          console.log("error");
+        },
+      });
+    } else {
+      //If id available, update existing marker in db
+      $.ajax({
+        url: `markers/${currentMarker._icon.id}`,
+        type: "put",
+        data: { title, desc, imgUrl },
+        success: (data) => {
+          alert("marker updated! make another one!");
+          isPopupOpen = false;
+        },
+        error: () => {
+          console.log("error");
+        },
+      });
+    }
   };
 
   //populate editor with existing value when marker is clicked
@@ -58,18 +78,23 @@ $(() => {
     $("#marker-editor-imgUrl")[0].value = popupUrl;
   };
 
-  //create a marker on dblclick
+  //create a new marker on dblclick
   function onMapDblClick(e) {
     if (isPopupOpen) {
       return;
     }
+    if (mapId === undefined) {
+      alert("Create a name & desc first!");
+      return;
+    }
+
     popupTitle = "";
     popupDesc = "";
     popupUrl = "";
     const lat = e.latlng.lat;
     const lng = e.latlng.lng;
     //generate a random markerId for temp use
-    const markerId = Math.floor(Math.random() * 100000000);
+    //const markerId = Math.floor(Math.random() * 100000000);
     currentMarker = L.marker([lat, lng]).addTo(mymap);
 
     //save content on popup close
@@ -79,7 +104,7 @@ $(() => {
     currentMarker.on("click", onMarkerClick);
 
     isPopupOpen = true;
-    currentMarker._icon.id = markerId;
+    //currentMarker._icon.id = markerId;
   }
 
   //bind a popup with updated html to marker
@@ -114,10 +139,10 @@ $(() => {
 
   mymap.on("dblclick", onMapDblClick);
 
+  //save map to db
   $("#save-map-button").on("click", (e) => {
     e.preventDefault();
     console.log("mymap :>> ", mymap);
-    console.log("tempMarkerStorage :>> ", tempMarkerStorage);
 
     const title = $("#map-editor-title")[0].value;
     const desc = $("#map-editor-desc")[0].value;
@@ -132,6 +157,7 @@ $(() => {
       data: { lat, lng, zoom, title, desc, isPublic },
       success: (data) => {
         mapId = data.id;
+        alert("Map saved to db, ready to create markers!");
       },
       error: () => {
         console.log("error");
@@ -139,9 +165,14 @@ $(() => {
     });
   });
 
+  //delete map from db and back to home
   $("#delete-map-button").on("click", (e) => {
     e.preventDefault();
     console.log("mymap :>> ", mymap);
-    console.log("tempMarkerStorage :>> ", tempMarkerStorage);
+    //TODO:
+  });
+
+  $("#delete-marker-button").on("click", (e) => {
+    //TODO:
   });
 });
