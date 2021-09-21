@@ -8,14 +8,15 @@ const express = require("express");
 const bodyParser = require("body-parser");
 // const sass = require("node-sass-middleware");
 const app = express();
-const morgan = require("morgan");
-const cookieSession = require("cookie-session");
+const morgan = require('morgan');
+const cookieSession = require('cookie-session');
 
 // PG database client/connection setup
-const { Pool } = require("pg");
-const dbParams = require("./lib/db.js");
-const db = new Pool(dbParams);
-db.connect();
+// const { Pool } = require('pg');
+// const dbParams = require('./lib/db.js');
+// const db = new Pool(dbParams);
+const db = require('./lib/db.js');
+// db.connect();
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -41,10 +42,18 @@ app.use(
 );
 app.use(express.static("public"));
 
+app.use(cookieSession({
+  name: 'session',
+  keys: ['randomstring', 'anotherrandomstring'],
+}));
+
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
 const usersRoutes = require("./routes/users");
 const widgetsRoutes = require("./routes/widgets");
+const mapsRoutes = require("./routes/maps_router");
+const favouritesRoutes = require("./routes/favourites_router");
+const userRoutes = require("./routes/users_router");
 const loginRoutes = require("./routes/login");
 const mapRoutes = require("./routes/map");
 const markerRoutes = require("./routes/marker");
@@ -52,6 +61,9 @@ const markerRoutes = require("./routes/marker");
 // Note: Feel free to replace the example routes below with your own
 app.use("/api/users", usersRoutes(db));
 app.use("/api/widgets", widgetsRoutes(db));
+app.use("/maps", mapsRoutes);
+app.use("/favourites", favouritesRoutes);
+app.use("/profile", userRoutes);
 // Note: mount other resources here, using the same pattern above
 app.use("/login", loginRoutes(db));
 app.use("/maps", mapRoutes(db));

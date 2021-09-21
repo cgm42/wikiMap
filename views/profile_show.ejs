@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/styles/header.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/footer.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/profile.css" type="text/css" />
+    <title>Profile - WikiMap</title>
+  </head>
+  <body>
+    <%- include('partials/_header') %>
+    <main style="margin-bottom: 10em">
+      <section>
+        <div>
+          <div class="col-md-6 offset-md-3">
+            <div
+              class="d-flex flex-column align-items-center text-center p-3 py-5"
+            >
+              <img
+                class="rounded-circle mt-5"
+                width="150px"
+                src="<%= user.avatar_url%>"
+              />
+              <br />
+              <h3 class="mt-0"><%= user.user_name%></h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="container">
+          <h2><span class="badge badge-primary"> Public Maps </span></h2>
+          <div class="row">
+            <% for(let map in maps) { %> <% if (maps[map].creator_id ===
+            user.id) {%>
+            <div class="col-sm-3">
+              <div class="card">
+                <img
+                  class="card-img-top"
+                  src="http://dummyimage.com/303x180.png/66ADC2/ffffff"
+                  alt="Card image cap"
+                />
+                <div class="card-block">
+                  <h5 class="card-title"><%= maps[map].title %></h5>
+                  <p class="card-text"><%= maps[map].description %></p>
+                  <div
+                    class="btn-group"
+                    role="group"
+                    aria-label="Basic example"
+                  >
+                    <form method="GET" action="/maps/<%=maps[map].id%>">
+                      <button
+                        type="submit"
+                        class="btn btn-primary justify-content-start"
+                      >
+                        View
+                      </button>
+                    </form>
+                    <form method="POST" action="/maps/<%=maps[map].id%>/delete">
+                      <button
+                        type="submit"
+                        class="btn btn-secondary justify-content-end"
+                      >
+                        Delete
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <% } %> <% } %>
+          </div>
+        </div>
+
+        <article style="margin-top: 2em">
+          <div class="container">
+            <h2><span class="badge badge-info"> Favourite Maps </span></h2>
+            <div class="row">
+              <% for(let fav in favourites) { %>
+              <div class="col-sm-3">
+                <div class="card">
+                  <img
+                    class="card-img-top"
+                    src="http://dummyimage.com/304x180.png/C27C66/ffffff"
+                    alt="Card image cap"
+                  />
+                  <div class="card-block">
+                    <h5 class="card-title"><%= favourites[fav].title %></h5>
+                    <p class="card-text"><%= favourites[fav].description %></p>
+                    <div
+                      class="btn-group"
+                      role="group"
+                      aria-label="Basic example"
+                    >
+                      <form
+                        method="GET"
+                        action="/maps/<%=favourites[fav].map_id%>"
+                      >
+                        <button
+                          type="submit"
+                          class="btn btn-primary justify-content-start"
+                        >
+                          View
+                        </button>
+                      </form>
+                      <form
+                        method="POST"
+                        action="/favourites/<%=favourites[fav].id%>/delete"
+                      >
+                        <button
+                          type="submit"
+                          class="btn btn-secondary justify-content-end"
+                        >
+                          Delete
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <% } %>
+            </div>
+          </div>
+        </article>
+      </section>
+    </main>
+    <!--  Bootstrap JSS -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
