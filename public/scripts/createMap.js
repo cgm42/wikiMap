@@ -1,5 +1,5 @@
 $(() => {
-  let isPopupOpen = false; //create new marker only allowed if F
+  let isPopupOpen = false; //create new marker only allowed if false
   let currentMarker;
   let popupTitle = "";
   let popupDesc = "";
@@ -142,7 +142,6 @@ $(() => {
   //save map to db
   $("#save-map-button").on("click", (e) => {
     e.preventDefault();
-    console.log("mymap :>> ", mymap);
 
     const title = $("#map-editor-title")[0].value;
     const desc = $("#map-editor-desc")[0].value;
