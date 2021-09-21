@@ -13,8 +13,13 @@
   background-color: aquamarine;
 } */
 
-.btn-group {
+#map-editor.inactive {
+  display: none;
 }
+#marker-editor.inactive {
+  display: none;
+}
+
 .btn-container {
   position: absolute;
   z-index: 100;
@@ -34,7 +39,7 @@
 a,
 label,
 p {
-  color: #fff;
+  color: rgb(15, 14, 14);
 }
 label {
   font-weight: 600;
@@ -55,20 +60,7 @@ label {
 .toggle-form .formwrap img {
   width: 20px;
 }
-.orange {
-  background-color: #ff910e;
-  border-color: #ff910e;
-  color: #fff;
-  padding: 0.5rem 2rem;
-  font-size: 1rem;
-  line-height: 1.5;
-  border-radius: 2rem;
-}
-.btn.orange:hover {
-  background-color: #da7600;
-  border-color: #da7600;
-  color: #fff;
-}
+
 .form-control {
   display: block;
   width: 80%;

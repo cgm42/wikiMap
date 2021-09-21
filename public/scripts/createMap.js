@@ -76,6 +76,10 @@ $(() => {
     $("#marker-editor-imgUrl")[0].value = popupUrl;
   };
 
+  function onMapClick(e) {
+    $(".toggle-form, .formwrap, .toggle-bg").removeClass("active");
+  }
+
   //create a new marker on dblclick
   function onMapDblClick(e) {
     if (isPopupOpen) {
@@ -135,6 +139,7 @@ $(() => {
     updateMarkerHTML(currentMarker);
   });
 
+  mymap.on("click", onMapClick);
   mymap.on("dblclick", onMapDblClick);
 
   //save map to db
@@ -172,18 +177,38 @@ $(() => {
     //TODO:
   });
 
-  // slider control
+  // slider control for map editor
   $(".map-button").on("click", function () {
     if (!$(".toggle-form, .formwrap, .toggle-bg").hasClass("active")) {
+      //display menu
       $(".toggle-form, .formwrap, .toggle-bg").addClass("active");
-      $(".icon-close").addClass("open");
+      $("#marker-editor").addClass("inactive");
+      $("#map-editor").removeClass("inactive");
+    } else if ($("#map-editor").hasClass("inactive")) {
+      //change to map menu
+      $("#marker-editor").addClass("inactive");
+      $("#map-editor").removeClass("inactive");
     } else {
+      //hide menu
       $(".toggle-form, .formwrap, .toggle-bg").removeClass("active");
+      $("#map-editor").addClass("inactive");
     }
   });
 
-  $(".icon-close").on("click", function () {
-    $(".toggle-form, .formwrap, .toggle-bg").removeClass("active");
-    $(".icon-close").removeClass("open");
+  $(".marker-button").on("click", function () {
+    if (!$(".toggle-form, .formwrap, .toggle-bg").hasClass("active")) {
+      //display
+      $(".toggle-form, .formwrap, .toggle-bg").addClass("active");
+      $("#map-editor").addClass("inactive");
+      $("#marker-editor").removeClass("inactive");
+    } else if ($("#marker-editor").hasClass("inactive")) {
+      //change to map menu
+      $("#map-editor").addClass("inactive");
+      $("#marker-editor").removeClass("inactive");
+    } else {
+      //hide
+      $(".toggle-form, .formwrap, .toggle-bg").removeClass("active");
+      $("#marker-editor").addClass("inactive");
+    }
   });
 });
