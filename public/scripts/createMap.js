@@ -5,8 +5,6 @@ $(() => {
   let popupDesc = "";
   let popupUrl = "";
   let mapId;
-  let long = 13.405;
-  let lat = 52.52;
 
   var mymap = L.map("mapid");
   mymap.locate({ setView: true, maxZoom: 12 });
@@ -64,18 +62,27 @@ $(() => {
     }
   };
 
-  //populate editor with existing value when marker is clicked
+  //open editor and populate with existing value when marker is clicked
   const onMarkerClick = (e) => {
     currentMarker = e.target;
-    popupTitle = e.target._popup._contentNode.firstElementChild.innerText;
+    //open marker editor
+    $(".toggle-form, .formwrap, .toggle-bg").addClass("active");
+    $("#map-editor").addClass("inactive");
+    $("#marker-editor").removeClass("inactive");
+    //get marker content
+    popupTitle = currentMarker._popup._contentNode.firstElementChild.innerText;
     popupDesc =
-      e.target._popup._contentNode.firstElementChild.nextSibling.nextSibling.data.trim();
-    popupUrl = e.target._popup._contentNode.getElementsByTagName("img")[0].src;
+      currentMarker._popup._contentNode.firstElementChild.nextSibling.nextSibling.data.trim();
+    //TODO: Fix imageurl bug displaying 8080
+    popupUrl =
+      currentMarker._popup._contentNode.getElementsByTagName("img")[0].src;
+    // populate values
     $("#marker-editor-title")[0].value = popupTitle;
     $("#marker-editor-desc")[0].value = popupDesc;
     $("#marker-editor-imgUrl")[0].value = popupUrl;
   };
 
+  //click anywhere on map to hide menu
   function onMapClick(e) {
     $(".toggle-form, .formwrap, .toggle-bg").removeClass("active");
   }
@@ -195,6 +202,7 @@ $(() => {
     }
   });
 
+  // slider control for marker editor
   $(".marker-button").on("click", function () {
     if (!$(".toggle-form, .formwrap, .toggle-bg").hasClass("active")) {
       //display

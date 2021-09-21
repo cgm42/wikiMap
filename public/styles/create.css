@@ -1,6 +1,6 @@
 #mapid {
   position: absolute;
-  height: 800px;
+  height: 93%;
   width: 100%;
   z-index: 1;
 }
@@ -87,7 +87,7 @@ label {
 .formwrap form input:focus {
   background-color: transparent;
   border-color: #fff;
-  color: #fff;
+  color: black;
   margin-right: 10px;
 }
 
