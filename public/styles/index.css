@@ -1,0 +1,33 @@
+html body {
+  height: 100vh;
+}
+
+html body .bg {
+  /* The image used */
+  background-image: url("https://cdn.pixabay.com/photo/2016/08/24/14/29/earth-1617121_960_720.jpg");
+  /* Half height */
+  height: 50%;
+  padding-top: 0;
+  margin-top: 0;
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.content{
+height:100%;
+display: flex;
+justify-content:center;
+align-items: center;
+}
+.index-bottom{
+  display: flex;
+  justify-content:space-evenly;
+  align-items:center;
+  padding: 20px;
+  font-family: 'Open Sans', sans-serif;
+  word-wrap: break-word;
+}
+#explore{
+  color: white;
+}
