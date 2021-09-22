@@ -193,10 +193,9 @@ $(() => {
 
     $.ajax({
       url: "/maps",
-      type: "post", //TODO: update to put
+      type: "put", //TODO: update to put
       data: { lat, lng, zoom, title, desc, isPublic },
       success: (data) => {
-        mapId = data.id;
         $("#map-editor-title")[0].value = mapTitle;
         $("#map-editor-desc")[0].value = mapDesc;
       },
