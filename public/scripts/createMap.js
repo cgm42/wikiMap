@@ -65,7 +65,7 @@ $(() => {
     // Save new marker to db if no marker id
     if (currentMarker._icon.id.length === 0) {
       return $.ajax({
-        url: "markers",
+        url: "/markers",
         type: "post",
         data: { mapId, title, desc, imgUrl, lat, lng },
         success: (data) => {
@@ -79,7 +79,7 @@ $(() => {
     } else {
       //If id available, update existing marker in db
       $.ajax({
-        url: `markers/${currentMarker._icon.id}`,
+        url: `/markers/${currentMarker._icon.id}`,
         type: "put",
         data: { title, desc, imgUrl },
         success: (data) => {
@@ -204,7 +204,7 @@ $(() => {
   mymap.on("click", onMapClick);
   mymap.on("dblclick", onMapDblClick);
 
-  //save map to db
+  //save(update) map to db
   $("#save-map-button").on("click", (e) => {
     e.preventDefault();
 
@@ -217,7 +217,7 @@ $(() => {
 
     $.ajax({
       url: "/maps",
-      type: "put", //TODO: update to put
+      type: "put",
       data: { lat, lng, zoom, title, desc, isPublic },
       success: (data) => {
         $("#map-editor-title")[0].value = mapTitle;
