@@ -30,17 +30,17 @@
                 src="<%= user.avatar_url%>"
               />
               <br />
-              <h3 class="mt-0"><%= user.user_name%></h3>
+              <h1 class="mt-0 badge-light"><%= user.user_name%></h1>
             </div>
           </div>
         </div>
 
         <div class="container">
-          <h1><span class="badge badge-primary"> Public Maps </span></h1>
+          <h1><span class="badge"> Public Maps </span></h1>
           <div class="row">
             <% for(let map in maps) { %> <% if (maps[map].creator_id ===
             user.id) {%>
-            <div class="col-sm-3">
+            <div class="col-lg-4 col-md-6 col-xl-3">
               <div class="card">
                 <img
                   class="card-img-top"
@@ -96,10 +96,10 @@
 
         <article style="margin-top: 2em">
           <div class="container">
-            <h1><span class="badge badge-info"> Favourite Maps </span></h1>
+            <h1><span class="badge "> Favourite Maps </span></h1>
             <div class="row">
               <% for(let fav in favourites) { %>
-              <div class="col-sm-3">
+              <div class="col-lg-4 col-md-6 col-xl-3">
                 <div class="card">
                   <img
                     class="card-img-top"
