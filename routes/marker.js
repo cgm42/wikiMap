@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 module.exports = (db) => {
+  //get markers belong to a map
   router.get("/:mapId", (req, res) => {
     const map_id = req.params.mapId;
 

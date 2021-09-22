@@ -38,6 +38,7 @@ $(() => {
       ${markerData.description}<br>
       <img src="${markerData.image_url}"/>`;
       marker.bindPopup(popupHTML);
+      marker._icon.id = markerData.id;
       marker.on("popupclose", onPopupClose);
       marker.on("click", onMarkerClick);
     }
@@ -67,7 +68,7 @@ $(() => {
     // Save new marker to db if no marker id
     if (currentMarker._icon.id.length === 0) {
       return $.ajax({
-        url: "markers",
+        url: "/markers",
         type: "post",
         data: { mapId, title, desc, imgUrl, lat, lng },
         success: (data) => {
@@ -81,7 +82,7 @@ $(() => {
     } else {
       //If id available, update existing marker in db
       $.ajax({
-        url: `markers/${currentMarker._icon.id}`,
+        url: `/markers/${currentMarker._icon.id}`,
         type: "put",
         data: { title, desc, imgUrl },
         success: (data) => {
