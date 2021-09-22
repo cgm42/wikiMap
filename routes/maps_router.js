@@ -2,18 +2,21 @@ const express = require("express");
 const router = express.Router();
 const mapQueries = require("../lib/maps_query");
 
-// GET /maps/
+
+// GET /featured/
 router.get("/", (req, res) => {
-  mapQueries
-    .getMaps()
+  const templateVars = {};
+  mapQueries.getMaps()
     .then((maps) => {
-      res.json({ maps });
+      templateVars.maps = maps;
+      res.render('featuredMaps', templateVars)
     })
-    .catch((err) => {
-      res.status(500).json({ error: err.message });
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: err.message });
     });
 });
-
 // GET /api/maps/:map_id
 // router.get("api/:map_id", (req, res) => {
 //   mapQueries

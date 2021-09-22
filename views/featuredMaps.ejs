@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/styles/header.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/footer.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/featuredMaps.css" type="text/css" />
+    <title>Featured Maps - WikiMap</title>
+  </head>
+  <body>
+    <%- include('partials/_header') %>
+    <main>
+      <section class="featured-maps">
+        <div class="container mt-2">
+          <h1><span class="badge"> Featured Maps </span></h1>
+          <div class="row">
+            <% for(let map in maps) { %> <% if(maps[map].ispublic){ %>
+
+            <div class="col-lg-4 col-md-6 col-xl-3">
+              <div class="card card-block">
+                <img
+                  class="card-img-top"
+                  src="http://dummyimage.com/303x180.png/66ADC2/ffffff"
+                  alt="Card image cap"
+                />
+                <div class="card-block">
+                  <h5 class="card-title mt-3 mb-3"><%= maps[map].title %></h5>
+                  <p class="card-text"><%= maps[map].description %></p>
+                  <div
+                    class="btn-group"
+                    role="group"
+                    aria-label="Basic example"
+                  >
+                    <form method="GET" action="/maps/<%=maps[map].id%>">
+                      <button
+                        type="submit"
+                        class="btn btn-primary justify-content-start viewbtn"
+                      >
+                        View
+                      </button>
+                    </form>
+                    <form
+                      method="POST"
+                      action="/favourites/<%=maps[map].id%>/add"
+                    >
+                      <button
+                        type="submit"
+                        class="btn btn-warning justify-content-end"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="20"
+                          height="20"
+                          fill="gray"
+                          class="bi bi-star"
+                          viewBox="0 0 16 15"
+                        >
+                          <path
+                            d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"
+                          />
+                        </svg>
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <% } %> <% } %>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!--  Bootstrap JSS -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

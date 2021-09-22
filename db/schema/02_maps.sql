@@ -6,7 +6,7 @@ CREATE TABLE maps (
   description TEXT,
   longitude DOUBLE PRECISION NOT NULL,
   latitude DOUBLE PRECISION NOT NULL,
-  isPublic BOOLEAN NOT NULL DEFAULT TRUE,
+  isPublic BOOLEAN NOT NULL DEFAULT true,
   created_on TIMESTAMP NOT NULL DEFAULT NOW(),
   zoom_level INTEGER NOT NULL
 );
