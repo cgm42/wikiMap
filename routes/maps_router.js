@@ -31,7 +31,11 @@ router.get("/:map_id", (req, res) => {
   mapQueries
     .getMapById(req.params.map_id)
     .then((map) => {
-      res.render("view", map);
+      if (req.session.user_id == map.creator_id) {
+        res.render("edit", map);
+      } else {
+        res.render("view", map);
+      }
     })
     .catch((err) => {
       res.status(500).json({ error: err.message });
