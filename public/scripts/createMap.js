@@ -8,8 +8,7 @@ $(() => {
   let popupUrl = "";
   let mapId;
 
-  var mymap = L.map("mapid");
-  mymap.locate({ setView: true, maxZoom: 12 });
+  var mymap = L.map("mapid").locate({ setView: true, maxZoom: 12 });
   L.tileLayer(
     "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
     {
@@ -32,7 +31,7 @@ $(() => {
     e.preventDefault();
     mapTitle = $("#new-map-title")[0].value;
     mapDesc = $("#new-map-desc")[0].value;
-    debugger;
+
     const lat = mymap.getBounds().getCenter().lat;
     const lng = mymap.getBounds().getCenter().lng;
     const zoom = mymap._zoom;
@@ -97,9 +96,9 @@ $(() => {
   const onMarkerClick = (e) => {
     currentMarker = e.target;
     //open marker editor
-    $(".toggle-form, .formwrap, .toggle-bg").addClass("active");
     $("#map-editor").addClass("inactive");
     $("#marker-editor").removeClass("inactive");
+    $(".toggle-form, .formwrap, .toggle-bg").addClass("active");
     //get marker content
     popupTitle = currentMarker._popup._contentNode.firstElementChild.innerText;
     popupDesc =
@@ -199,8 +198,8 @@ $(() => {
         $("#map-editor-title")[0].value = mapTitle;
         $("#map-editor-desc")[0].value = mapDesc;
       },
-      error: () => {
-        console.log("error");
+      error: (err) => {
+        console.log("error", err);
       },
     });
   });
