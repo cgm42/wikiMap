@@ -5,6 +5,9 @@ footer a.text-light:hover {
 footer .cizgi {
   border-right: 1px solid #535e67;
 }
+.map-footer {
+  height: 20px;
+}
 @media (max-width: 992px) {
   footer .cizgi {
     border-right: none;
