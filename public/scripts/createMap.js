@@ -100,12 +100,22 @@ $(() => {
     $("#marker-editor").removeClass("inactive");
     $(".toggle-form, .formwrap, .toggle-bg").addClass("active");
     //get marker content
-    popupTitle = currentMarker._popup._contentNode.firstElementChild.innerText;
+    popupTitle =
+      currentMarker._popup._contentNode.getElementsByTagName("h4")[0]
+        .textContent;
     popupDesc =
-      currentMarker._popup._contentNode.firstElementChild.nextSibling.nextSibling.data.trim();
-    //TODO: Fix imageurl bug displaying 8080
-    popupUrl =
-      currentMarker._popup._contentNode.getElementsByTagName("img")[0].src;
+      currentMarker._popup._contentNode.getElementsByTagName("p")[0]
+        .textContent;
+
+    if (
+      currentMarker._popup._contentNode.getElementsByClassName("img")[0] ===
+      undefined
+    ) {
+      popupUrl = "";
+    } else {
+      popupUrl =
+        currentMarker._popup._contentNode.getElementsByClassName("img")[0].src;
+    }
     // populate values
     $("#marker-editor-title")[0].value = popupTitle;
     $("#marker-editor-desc")[0].value = popupDesc;
@@ -146,18 +156,20 @@ $(() => {
   //bind a popup with updated html to marker
   const updateMarkerHTML = (marker) => {
     let popupHTML = `
-    <h3>${popupTitle}</h3><br>
-    ${popupDesc}<br>
-    <img src="${popupUrl}" style="max-height: 300px; max-width: 300px;"/>`;
+    <img class='imgUrl' src="${popupUrl}" style="max-height: 300px; max-width: 300px;"/>
+    <h4>${popupTitle}</h4>
+    <p>${popupDesc}</p>
+    `;
     marker.bindPopup(popupHTML);
     marker.openPopup();
   };
 
   const updateMarkerHTML4Image = (marker) => {
     let popupHTML = `
-    <h3>${popupTitle}</h3><br>
-    ${popupDesc}<br>
-    <img src="${popupUrl}" style="max-height: 300px; max-width: 300px;"/>`;
+    <img class='imgUrl' src="${popupUrl}" style="max-height: 300px; max-width: 300px;"/>
+    <h4>${popupTitle}</h4>
+    <p>${popupDesc}</p>
+    `;
     marker.bindPopup(popupHTML, { maxWidth: "300px" });
     marker.openPopup();
     marker._popup._updateLayout();
