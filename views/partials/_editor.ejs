@@ -65,7 +65,7 @@
           id="image-button"
           class="btn btn-primary"
           data-toggle="modal"
-          data-target="#exampleModalCenter"
+          data-target="#imageModal"
         >
           Image
         </button>
@@ -87,10 +87,10 @@
   <!-- Image Modal -->
   <div
     class="modal fade"
-    id="exampleModalCenter"
+    id="imageModal"
     tabindex="-1"
     role="dialog"
-    aria-labelledby="exampleModalCenterTitle"
+    aria-labelledby="imageModalTitle"
     aria-hidden="true"
   >
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -121,7 +121,7 @@
           <button type="button" class="btn btn-secondary" data-dismiss="modal">
             Close
           </button>
-          <button type="button" class="btn btn-primary" data-dismiss="modal">
+          <button id="save-image-button" type="button" class="btn btn-primary">
             Save changes
           </button>
         </div>

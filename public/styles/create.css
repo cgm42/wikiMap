@@ -5,17 +5,22 @@
   z-index: 1;
 }
 
-#popup-form {
+/* #popup-form {
   background-color: aqua;
-}
+} */
 
 /* .edit-panel {
   height: 600px;
   background-color: aquamarine;
 } */
-
+#map-editor {
+  margin-top: 50%;
+}
 #map-editor.inactive {
   display: none;
+}
+#marker-editor {
+  margin-top: 50%;
 }
 #marker-editor.inactive {
   display: none;
@@ -51,12 +56,12 @@ label {
   position: fixed;
   top: auto;
   height: 100%;
-  z-index: 100;
+  z-index: 20;
   transition: right 0.6s ease-in-out;
 }
 .toggle-form.active {
   right: 0;
-  top: 10.5%;
+  top: 0;
 }
 .toggle-form .formwrap img {
   width: 20px;
@@ -77,7 +82,7 @@ label {
   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }
 .formwrap {
-  background-color: #eef1f4a1;
+  background-color: #f8f9faf2;
   top: 10.5%;
   max-width: 620px;
   height: 100%;
@@ -92,24 +97,8 @@ label {
   margin-right: 10px;
 }
 
-.mid-col {
-  max-width: 100%;
-  flex: 0 0 100%;
-  -ms-flex: 0 0 100%;
-}
-.form-control {
-  background-color: transparent;
-  border-color: #fff;
-  color: #fff;
-  margin-right: 10px;
-}
-select.form-control:not([size]):not([multiple]) {
-  background-color: transparent;
-  border-color: #fff;
-  color: #fff;
-}
 option {
-  background-color: #fff;
+  background-color: rgba(77, 77, 192, 0.082);
   color: #1f2124;
 }
 @media (max-width: 575px) {

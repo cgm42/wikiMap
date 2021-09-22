@@ -60,7 +60,6 @@ $(() => {
     const imgUrl = $("#marker-editor-imgUrl")[0].value;
     const lat = currentMarker.getLatLng().lat;
     const lng = currentMarker.getLatLng().lng;
-    console.log(currentMarker._icon.id);
     $("#marker-editor").trigger("reset");
     // Save new marker to db if no marker id
     if (currentMarker._icon.id.length === 0) {
@@ -106,6 +105,7 @@ $(() => {
     //TODO: Fix imageurl bug displaying 8080
     popupUrl =
       currentMarker._popup._contentNode.getElementsByTagName("img")[0].src;
+    console.log(popupUrl);
     // populate values
     $("#marker-editor-title")[0].value = popupTitle;
     $("#marker-editor-desc")[0].value = popupDesc;
@@ -132,15 +132,12 @@ $(() => {
     popupUrl = "";
     const lat = e.latlng.lat;
     const lng = e.latlng.lng;
-    //generate a random markerId for temp use
-    //const markerId = Math.floor(Math.random() * 100000000);
     currentMarker = L.marker([lat, lng]).addTo(mymap);
     //save content on popup close
     currentMarker.on("popupclose", onPopupClose);
     //select a marker on click
     currentMarker.on("click", onMarkerClick);
     isPopupOpen = true;
-    //currentMarker._icon.id = markerId;
     //toggle marker editor
     $(".toggle-form, .formwrap, .toggle-bg").addClass("active");
     $("#marker-editor").removeClass("inactive");
@@ -151,8 +148,24 @@ $(() => {
     let popupHTML = `
     <h3>${popupTitle}</h3><br>
     ${popupDesc}<br>
-    <img src="${popupUrl}"/>`;
-    marker.bindPopup(popupHTML).openPopup();
+    <img src="${popupUrl}" style="max-height: 300px; max-width: 300px;"/>`;
+    marker.bindPopup(popupHTML);
+    marker.openPopup();
+  };
+
+  const updateMarkerHTML4Image = (marker) => {
+    let popupHTML = `
+    <h3>${popupTitle}</h3><br>
+    ${popupDesc}<br>
+    <img src="${popupUrl}" style="max-height: 300px; max-width: 300px;"/>`;
+    marker.bindPopup(popupHTML, { maxWidth: "300px" });
+    marker.openPopup();
+    marker._popup._updateLayout();
+    marker.closePopup();
+    setTimeout(() => {
+      marker._popup._updateLayout();
+      marker.openPopup();
+    }, 500);
   };
 
   //sync typing in popup and editor for title
@@ -169,11 +182,11 @@ $(() => {
     updateMarkerHTML(currentMarker);
   });
 
-  //sync image in popup
-  $("#marker-editor-imgUrl").on("input", (e) => {
-    const input = e.target.value;
-    popupUrl = input;
-    updateMarkerHTML(currentMarker);
+  //save imgurl from modal
+  $("#save-image-button").on("click", (e) => {
+    popupUrl = $("#marker-editor-imgUrl")[0].value;
+    updateMarkerHTML4Image(currentMarker);
+    $("#imageModal").modal("hide");
   });
 
   mymap.on("click", onMapClick);
