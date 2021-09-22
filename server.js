@@ -6,16 +6,16 @@ const PORT = process.env.PORT || 8080;
 const ENV = process.env.ENV || "development";
 const express = require("express");
 const bodyParser = require("body-parser");
-const sass = require("node-sass-middleware");
+// const sass = require("node-sass-middleware");
 const app = express();
-const morgan = require('morgan');
-const cookieSession = require('cookie-session');
+const morgan = require("morgan");
+const cookieSession = require("cookie-session");
 
 // PG database client/connection setup
 // const { Pool } = require('pg');
 // const dbParams = require('./lib/db.js');
 // const db = new Pool(dbParams);
-const db = require('./lib/db.js');
+const db = require("./lib/db.js");
 // db.connect();
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
@@ -25,15 +25,15 @@ app.use(morgan("dev"));
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(
-  "/styles",
-  sass({
-    src: __dirname + "/styles",
-    dest: __dirname + "/public/styles",
-    debug: true,
-    outputStyle: "expanded",
-  })
-);
+// app.use(
+//   "/styles",
+//   sass({
+//     src: __dirname + "/styles",
+//     dest: __dirname + "/public/styles",
+//     debug: true,
+//     outputStyle: "expanded",
+//   })
+// );
 app.use(
   cookieSession({
     name: "session",
@@ -42,10 +42,12 @@ app.use(
 );
 app.use(express.static("public"));
 
-app.use(cookieSession({
-  name: 'session',
-  keys: ['randomstring', 'anotherrandomstring'],
-}));
+app.use(
+  cookieSession({
+    name: "session",
+    keys: ["randomstring", "anotherrandomstring"],
+  })
+);
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
@@ -55,7 +57,7 @@ const mapsRoutes = require("./routes/maps_router");
 const favouritesRoutes = require("./routes/favourites_router");
 const userRoutes = require("./routes/users_router");
 const loginRoutes = require("./routes/login");
-
+const markerRoutes = require("./routes/marker");
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 app.use("/api/users", usersRoutes(db));
@@ -65,6 +67,7 @@ app.use("/favourites", favouritesRoutes);
 app.use("/profile", userRoutes);
 // Note: mount other resources here, using the same pattern above
 app.use("/login", loginRoutes(db));
+app.use("/markers", markerRoutes(db));
 
 // Home page
 // Warning: avoid creating more routes in this file!
