@@ -14,6 +14,22 @@ router.get("/", (req, res) => {
     });
 });
 
+// GET /featured/
+
+router.get("/featured", (req, res) => {
+  const templateVars = {};
+  mapQueries.getMaps()
+    .then((maps) => {
+      templateVars.maps = maps;
+      res.render('featuredMaps', templateVars)
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
+});
+
 // GET /maps/:map_id
 router.get("/:map_id", (req, res) => {
   mapQueries
