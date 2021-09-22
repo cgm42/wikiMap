@@ -14,12 +14,25 @@ router.get("/", (req, res) => {
     });
 });
 
+// GET /api/maps/:map_id
+router.get("api/:map_id", (req, res) => {
+  mapQueries
+    .getMapById(req.params.map_id)
+    .then((map) => {
+      res.json({ map });
+    })
+    .catch((err) => {
+      res.status(500).json({ error: err.message });
+    });
+});
+
 // GET /maps/:map_id
 router.get("/:map_id", (req, res) => {
   mapQueries
-    .getMapById(req.params.product_id)
+    .getMapById(req.params.map_id)
     .then((map) => {
-      res.json({ map });
+      console.log(map);
+      res.render("view", map);
     })
     .catch((err) => {
       res.status(500).json({ error: err.message });
