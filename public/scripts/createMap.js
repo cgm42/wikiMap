@@ -61,6 +61,7 @@ $(() => {
     const lat = currentMarker.getLatLng().lat;
     const lng = currentMarker.getLatLng().lng;
     $("#marker-editor").trigger("reset");
+    $("#marker-editor-imgUrl")[0].value = "";
     // Save new marker to db if no marker id
     if (currentMarker._icon.id.length === 0) {
       return $.ajax({
@@ -105,7 +106,6 @@ $(() => {
     //TODO: Fix imageurl bug displaying 8080
     popupUrl =
       currentMarker._popup._contentNode.getElementsByTagName("img")[0].src;
-    console.log(popupUrl);
     // populate values
     $("#marker-editor-title")[0].value = popupTitle;
     $("#marker-editor-desc")[0].value = popupDesc;
@@ -165,7 +165,7 @@ $(() => {
     setTimeout(() => {
       marker._popup._updateLayout();
       marker.openPopup();
-    }, 500);
+    }, 800);
   };
 
   //sync typing in popup and editor for title
