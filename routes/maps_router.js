@@ -15,16 +15,16 @@ router.get("/", (req, res) => {
 });
 
 // GET /api/maps/:map_id
-router.get("api/:map_id", (req, res) => {
-  mapQueries
-    .getMapById(req.params.map_id)
-    .then((map) => {
-      res.json({ map });
-    })
-    .catch((err) => {
-      res.status(500).json({ error: err.message });
-    });
-});
+// router.get("api/:map_id", (req, res) => {
+//   mapQueries
+//     .getMapById(req.params.map_id)
+//     .then((map) => {
+//       res.json({ map });
+//     })
+//     .catch((err) => {
+//       res.status(500).json({ error: err.message });
+//     });
+// });
 
 // GET /maps/:map_id
 router.get("/:map_id", (req, res) => {
