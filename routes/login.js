@@ -23,6 +23,7 @@ module.exports = (db) => {
         return data.rows[0];
       })
       .then((row) => {
+        req.session.username = row.user_name
         req.session.user_id = row.id;
         res.redirect("/");
       })
