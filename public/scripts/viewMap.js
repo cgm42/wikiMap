@@ -18,4 +18,26 @@ $(() => {
         "sk.eyJ1IjoiY2dtZW93IiwiYSI6ImNrdHEzdXZ5bDBzcTcyeG8zY3d2eDZtdWIifQ.E0aRLAKw0M-8RLA2DaxicQ",
     }
   ).addTo(mymap);
+
+  const loadMarkers = (data) => {
+    for (markerData of data) {
+      var marker = L.marker([markerData.latitude, markerData.longitude]).addTo(
+        mymap
+      );
+      let popupHTML = `
+      <h3>${markerData.title}</h3><br>
+      ${markerData.description}<br>
+      <img src="${markerData.image_url}"/>`;
+      marker.bindPopup(popupHTML);
+    }
+  };
+
+  $.ajax({
+    url: `/markers/${id}`,
+    type: "get",
+    success: loadMarkers,
+    error: () => {
+      console.log("error");
+    },
+  });
 });

@@ -31,7 +31,6 @@ router.get("/:map_id", (req, res) => {
   mapQueries
     .getMapById(req.params.map_id)
     .then((map) => {
-      console.log(map);
       res.render("view", map);
     })
     .catch((err) => {

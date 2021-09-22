@@ -2,6 +2,22 @@ const express = require("express");
 const router = express.Router();
 
 module.exports = (db) => {
+  router.get("/:mapId", (req, res) => {
+    const map_id = req.params.mapId;
+
+    db.query(`SELECT * FROM markers WHERE map_id=$1`, [map_id])
+      .then((data) => {
+        console.log(data.rows);
+        return data.rows;
+      })
+      .then((rows) => {
+        res.send(rows);
+      })
+      .catch((err) => {
+        res.status(500).json({ error: err.message });
+      });
+  });
+
   router.post("/", (req, res) => {
     const map_id = req.body.mapId;
     const user_id = req.session.user_id;
