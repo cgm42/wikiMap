@@ -17,19 +17,22 @@ const favQueries = require('../lib/favourites_query');
 //     });
 // });
 
-// GET /profile/:user_id
-router.get('/:user_id', (req, res) => {
+// GET /profile/:username
+router.get('/:username', (req, res) => {
   const templateVars = {};
-  req.session.user_id = req.params.user_id;
-  userQueries.getUserById(req.params.user_id)
+  // req.session.user_id = req.params.user_id;
+  userQueries.getUserByUsername(req.params.username)
     .then((user) => {
       templateVars.user = user;
+      templateVars.sessionId = req.session.user_id
       return mapQueries.getMaps()
     }).then((maps) => {
       templateVars.maps = maps;
       return favQueries.getFavourites()
     }).then((fav) => {
       templateVars.favourites = fav;
+      // console.log("sessionId:", templateVars.sessionId)
+      // console.log("favvvvv:", templateVars.favourites)
       res.render('profile_show', templateVars)
     })
     .catch(err => {
