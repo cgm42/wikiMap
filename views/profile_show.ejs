@@ -20,17 +20,19 @@
     <main style="margin-bottom: 10em">
       <section>
         <div>
-          <div class="col-md-6 offset-md-3">
+          <div class="col-md-6 offset-md-3 user-avatar">
             <div
               class="d-flex flex-column align-items-center text-center p-3 py-5"
             >
+            <div class="block">
               <img
                 class="rounded-circle mt-5 avatar-img"
                 width="150px"
                 src="<%= user.avatar_url%>"
               />
               <br />
-              <h1 class="mt-0 badge-light"><%= user.user_name%></h1>
+              <h1 class="username-text"><%= user.user_name%></h1>
+            </div>
             </div>
           </div>
         </div>
@@ -44,7 +46,7 @@
               <div class="card">
                 <img
                   class="card-img-top"
-                  src="http://dummyimage.com/303x180.png/66ADC2/ffffff"
+                  src="https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/<%=maps[map].longitude%>,<%=maps[map].latitude%>,11.5,0/303x180?access_token=pk.eyJ1IjoiYm9ic2giLCJhIjoiY2t0d2E5aGx4MDhvejJybndjM2hvNWc5NSJ9.o3jxq8IEZVKfrJutkzorww"
                   alt="Card image cap"
                 />
                 <div class="card-block">
@@ -59,7 +61,7 @@
                       <form method="GET" action="/maps/<%=maps[map].id%>">
                         <button
                           type="submit"
-                          class="btn btn-primary justify-content-start viewbtn"
+                          class="btn glow-on-hover justify-content-start viewbtn"
                         >
                           View
                         </button>
@@ -113,7 +115,7 @@
                 <div class="card">
                   <img
                     class="card-img-top"
-                    src="http://dummyimage.com/304x180.png/C27C66/ffffff"
+                    src="https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/<%=favourites[fav].longitude%>,<%=favourites[fav].latitude%>,11.5,0/303x180?access_token=pk.eyJ1IjoiYm9ic2giLCJhIjoiY2t0d2E5aGx4MDhvejJybndjM2hvNWc5NSJ9.o3jxq8IEZVKfrJutkzorww"
                     alt="Card image cap"
                   />
                   <div class="card-block">
@@ -132,7 +134,7 @@
                           <button
                             type="submit"
                             class="
-                              btn btn-primary
+                              btn glow-on-hover
                               justify-content-start
                               viewbtn
                             "
