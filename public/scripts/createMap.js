@@ -85,7 +85,7 @@ $(() => {
     const isPublic = true;
 
     $.ajax({
-      url: "/maps",
+      url: `/maps/${mapId}`,
       type: "put",
       data: { lat, lng, zoom, title, desc, isPublic },
       success: (data) => {
