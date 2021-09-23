@@ -118,8 +118,8 @@ function onMapDblClick(e) {
 
 const onMarkerDelete = (e) => {
   e.preventDefault();
-  console.log("delete marker?");
   const marker_id = currentMarker._icon.id;
+  console.log("deleting marker id " + marker_id);
   $.ajax({
     url: `/markers/delete/${marker_id}`,
     type: "delete",
@@ -171,7 +171,7 @@ const updateMarkerHTML = (marker) => {
   marker.openPopup();
 
   setTimeout(() => {
-    marker._popup._updateLayout();
+    marker.getPopup()._updateLayout();
     marker.openPopup();
   }, 100);
 };

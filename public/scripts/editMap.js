@@ -37,6 +37,8 @@ $(() => {
       `;
       marker.bindPopup(popupHTML, { maxWidth: "300px" });
       marker._icon.id = markerData.id;
+      marker.openPopup();
+      marker.closePopup();
       marker.on("popupclose", onPopupClose);
       marker.on("click", onMarkerClick);
     }
