@@ -26,6 +26,7 @@
   display: none;
 }
 #basemap-editor {
+  width: 203px;
   margin-top: 50%;
 }
 #basemap-editor.inactive {
