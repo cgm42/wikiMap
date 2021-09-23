@@ -116,6 +116,7 @@ function onMapDblClick(e) {
   //toggle marker editor
   $(".toggle-form, .formwrap, .toggle-bg").addClass("active");
   $("#marker-editor").removeClass("inactive");
+  $("#marker-editor-title").focus();
   $("#basemap-editor").addClass("inactive");
 }
 
@@ -141,6 +142,7 @@ const onSaveMapClick = (e) => {
       mapDesc = desc;
       $("#map-editor-title")[0].value = mapTitle;
       $("#map-editor-desc")[0].value = mapDesc;
+      displayAlert("Map saved!");
     },
     error: (err) => {
       console.log("error", err);
@@ -157,6 +159,10 @@ const onMarkerDelete = (e) => {
     type: "delete",
     success: () => {
       mymap.removeLayer(currentMarker);
+      $("#marker-editor").trigger("reset");
+      $("#marker-editor-imgUrl")[0].value = "";
+      $(".toggle-form, .formwrap, .toggle-bg").removeClass("active");
+      displayAlert("Marker deleted!");
     },
     error: () => {
       console.log("error");
