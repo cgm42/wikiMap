@@ -143,11 +143,17 @@ const getValuesFromMarker = (marker) => {
   if (popupElement === undefined) return null;
   const title = popupElement.getElementsByTagName("h4")[0].textContent;
   const desc = popupElement.getElementsByTagName("p")[0].textContent;
-  if (popupElement.getElementsByClassName("imgUrl")[0] === undefined) {
+  if (
+    !popupElement.getElementsByClassName("imgUrl")[0] ||
+    !popupElement.getElementsByClassName("imgUrl")[0].attributes.src
+  ) {
     url = "";
   } else {
-    url = popupElement.getElementsByClassName("imgUrl")[0].src;
+    url =
+      popupElement.getElementsByClassName("imgUrl")[0].attributes.src
+        .textContent;
   }
+  console.log("url :>> ", url);
   const result = { title, desc, url };
   return result;
 };
