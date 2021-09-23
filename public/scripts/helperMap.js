@@ -2,6 +2,8 @@
  * Setup global state for the map file
  */
 
+//const marker = require("../../routes/marker");
+
 let currentMarker;
 let isPopupOpen = false; //create new marker only allowed if false
 let mapDesc = "";
@@ -15,7 +17,7 @@ let mymap;
 //Save/update marker on popup close
 const onPopupClose = (e) => {
   const data = getValuesFromMarker(e.target);
-  if (data === null) {
+  if (data === null || e.target._icon === null) {
     return;
   }
   const title = data.title;
@@ -113,6 +115,22 @@ function onMapDblClick(e) {
   $(".toggle-form, .formwrap, .toggle-bg").addClass("active");
   $("#marker-editor").removeClass("inactive");
 }
+
+const onMarkerDelete = (e) => {
+  e.preventDefault();
+  console.log("delete marker?");
+  const marker_id = currentMarker._icon.id;
+  $.ajax({
+    url: `/markers/delete/${marker_id}`,
+    type: "delete",
+    success: () => {
+      mymap.removeLayer(currentMarker);
+    },
+    error: () => {
+      console.log("error");
+    },
+  });
+};
 
 //======================      HELPERS     ========================
 /**

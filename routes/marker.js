@@ -62,5 +62,20 @@ module.exports = (db) => {
         res.status(500).json({ error: err.message });
       });
   });
+
+  router.delete("/delete/:marker_id", (req, res) => {
+    const marker_id = req.params.marker_id;
+    db.query(
+      `DELETE FROM markers
+    WHERE id = $1;`,
+      [marker_id]
+    )
+      .then(() => {
+        res.status(200).send("deleted marker");
+      })
+      .catch((err) => {
+        res.status(500).json({ error: err.message });
+      });
+  });
   return router;
 };

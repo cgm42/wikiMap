@@ -105,9 +105,7 @@ $(() => {
     //TODO:
   });
 
-  $("#delete-marker-button").on("click", (e) => {
-    //TODO:
-  });
+  $("#delete-marker-button").on("click", onMarkerDelete);
 
   // slider control for map editor
   $(".map-button").on("click", function () {
