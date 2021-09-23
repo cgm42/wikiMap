@@ -66,6 +66,7 @@ div [class^="col-"] {
 }
 .card-text {
   height: 80px;
+  font-size: 12px;
 }
 
 .card::before,
