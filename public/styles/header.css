@@ -1,18 +1,28 @@
-.navbar {
-  background-color: none;
+@media (min-width: 992px) {
+  .navbar-expand-lg {
+    padding-right: 200px;
+    padding-left: 200px;
+  }
+}
+.navbar-custom{
+  background-image: -webkit-gradient(linear, left bottom, right top, color-stop(10%,#007bffd3), color-stop(100%,#338a99));
+}
+#brand{
+  width:30px !important;
+  height:30px !important;
 }
 .navbar .navbar-nav .nav-link {
-  color: #fff;
+  color: rgb(255, 255, 255);
 }
 .navbar .navbar-nav .nav-link:hover {
-  color: #fbc531;
+  color: #31f4fb;
 }
 .navbar .navbar-nav .active > .nav-link {
-  color: #fbc531;
+  color: #71fb31;
 }
 .create-container {
   margin-top: 55px;
 }
 .btn-secondary:hover {
-  color: #fbc531;
+  color: #31fbc8;
 }
