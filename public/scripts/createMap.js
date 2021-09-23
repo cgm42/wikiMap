@@ -55,14 +55,21 @@ $(() => {
 
   //Save marker on popup close
   const onPopupClose = (e) => {
-    const title = $("#marker-editor-title")[0].value;
-    const desc = $("#marker-editor-desc")[0].value;
-    const imgUrl = $("#marker-editor-imgUrl")[0].value;
+    const data = getValuesFromMarker(e.target);
+    if (data === null) {
+      return;
+    }
+    const title = data.title;
+    const desc = data.desc;
+    const imgUrl = data.url;
+
     const lat = currentMarker.getLatLng().lat;
     const lng = currentMarker.getLatLng().lng;
     $("#marker-editor").trigger("reset");
+    console.log("payload", { title, desc, imgUrl });
     $("#marker-editor-imgUrl")[0].value = "";
     // Save new marker to db if no marker id
+
     if (currentMarker._icon.id.length === 0) {
       return $.ajax({
         url: "/markers",
@@ -78,7 +85,8 @@ $(() => {
       });
     } else {
       //If id available, update existing marker in db
-      $.ajax({
+
+      return $.ajax({
         url: `/markers/${currentMarker._icon.id}`,
         type: "put",
         data: { title, desc, imgUrl },
@@ -95,31 +103,42 @@ $(() => {
   //open editor and populate with existing value when marker is clicked
   const onMarkerClick = (e) => {
     currentMarker = e.target;
+    const data = getValuesFromMarker(currentMarker);
+    if (data === null) {
+      return;
+    }
+    //get marker content
+    popupTitle = data.title;
+    popupDesc = data.desc;
+    popupUrl = data.url;
     //open marker editor
     $("#map-editor").addClass("inactive");
     $("#marker-editor").removeClass("inactive");
     $(".toggle-form, .formwrap, .toggle-bg").addClass("active");
-    //get marker content
-    popupTitle =
-      currentMarker._popup._contentNode.getElementsByTagName("h4")[0]
-        .textContent;
-    popupDesc =
-      currentMarker._popup._contentNode.getElementsByTagName("p")[0]
-        .textContent;
-
-    if (
-      currentMarker._popup._contentNode.getElementsByClassName("img")[0] ===
-      undefined
-    ) {
-      popupUrl = "";
-    } else {
-      popupUrl =
-        currentMarker._popup._contentNode.getElementsByClassName("img")[0].src;
-    }
     // populate values
     $("#marker-editor-title")[0].value = popupTitle;
     $("#marker-editor-desc")[0].value = popupDesc;
     $("#marker-editor-imgUrl")[0].value = popupUrl;
+  };
+
+  //helper function: returns data from marker obj
+  /**
+   *
+   * @param {*} marker
+   * @returns null | object Returns null when there is no popup, otherwise return info object
+   */
+  const getValuesFromMarker = (marker) => {
+    const popupElement = marker.getPopup().getElement();
+    if (popupElement === undefined) return null;
+    const title = popupElement.getElementsByTagName("h4")[0].textContent;
+    const desc = popupElement.getElementsByTagName("p")[0].textContent;
+    if (popupElement.getElementsByClassName("imgUrl")[0] === undefined) {
+      url = "";
+    } else {
+      url = popupElement.getElementsByClassName("imgUrl")[0].src;
+    }
+    const result = { title, desc, url };
+    return result;
   };
 
   //click anywhere on map to hide menu
@@ -155,6 +174,8 @@ $(() => {
 
   //bind a popup with updated html to marker
   const updateMarkerHTML = (marker) => {
+    console.log("updateMarkerHTML");
+
     let popupHTML = `
     <img class='imgUrl' src="${popupUrl}" style="max-height: 300px; max-width: 300px;"/>
     <h4>${popupTitle}</h4>
@@ -162,9 +183,16 @@ $(() => {
     `;
     marker.bindPopup(popupHTML);
     marker.openPopup();
+
+    setTimeout(() => {
+      console.log("settimeout");
+      marker._popup._updateLayout();
+      marker.openPopup();
+    }, 800);
   };
 
   const updateMarkerHTML4Image = (marker) => {
+    console.log("updateMarkerHTML4Image");
     let popupHTML = `
     <img class='imgUrl' src="${popupUrl}" style="max-height: 300px; max-width: 300px;"/>
     <h4>${popupTitle}</h4>
@@ -172,8 +200,9 @@ $(() => {
     `;
     marker.bindPopup(popupHTML, { maxWidth: "300px" });
     marker.openPopup();
-    marker._popup._updateLayout();
-    marker.closePopup();
+    // marker._popup._updateLayout();
+    // marker.closePopup();
+    //marker.openPopup();
     setTimeout(() => {
       marker._popup._updateLayout();
       marker.openPopup();
