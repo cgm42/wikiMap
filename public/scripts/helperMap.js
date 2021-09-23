@@ -137,6 +137,8 @@ const onSaveMapClick = (e) => {
     type: "put",
     data,
     success: (data) => {
+      mapTitle = title;
+      mapDesc = desc;
       $("#map-editor-title")[0].value = mapTitle;
       $("#map-editor-desc")[0].value = mapDesc;
     },
