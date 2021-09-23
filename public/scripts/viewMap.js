@@ -40,4 +40,7 @@ $(() => {
       console.log("error");
     },
   });
+
+  let ctrlCoor = new L.Control.Coordinates();
+  ctrlCoor.addTo(mymap);
 });
