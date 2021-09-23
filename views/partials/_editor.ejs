@@ -25,12 +25,13 @@
         </div>
         <div class="form-group">
           <label>Description</label>
-          <input
+          <textarea
             id="map-editor-desc"
             type="text"
             class="form-control"
             placeholder="A detailed description"
-          />
+            rows="7"
+          ></textarea>
         </div>
         <button id="save-map-button" type="button" class="btn btn-secondary">
           Save
@@ -52,13 +53,15 @@
         </div>
         <div class="form-group">
           <label>Description</label>
-          <input
+          <textarea
             id="marker-editor-desc"
             type="text"
             class="form-control"
+            rows="7"
             placeholder="A detailed description"
-          />
+          ></textarea>
         </div>
+
         <!-- Button trigger modal -->
         <button
           type="button"
@@ -78,7 +81,59 @@
           Delete Marker
         </button>
       </form>
+      <!-- basemap menu -->
+      <br />
 
+      <div id="basemap-editor" class="list-group">
+        <button
+          type="button"
+          class="list-group-item list-group-item-action active"
+        >
+          Streets
+        </button>
+        <button type="button" class="list-group-item list-group-item-action">
+          Dark
+        </button>
+        <button type="button" class="list-group-item list-group-item-action">
+          Navigation
+        </button>
+        <button type="button" class="list-group-item list-group-item-action">
+          Night
+        </button>
+        <button type="button" class="list-group-item list-group-item-action">
+          Satellite Streets
+        </button>
+        <button type="button" class="list-group-item list-group-item-action">
+          Light
+        </button>
+        <button type="button" class="list-group-item list-group-item-action">
+          Watercolor
+        </button>
+        <button type="button" class="list-group-item list-group-item-action">
+          Toner
+        </button>
+        <button type="button" class="list-group-item list-group-item-action">
+          Pioneer
+        </button>
+        <button type="button" class="list-group-item list-group-item-action">
+          Spinal
+        </button>
+        <button type="button" class="list-group-item list-group-item-action">
+          Transport
+        </button>
+        <button type="button" class="list-group-item list-group-item-action">
+          Voyager
+        </button>
+        <button type="button" class="list-group-item list-group-item-action">
+          Dark Matter
+        </button>
+        <button type="button" class="list-group-item list-group-item-action">
+          Google Satellite
+        </button>
+        <button type="button" class="list-group-item list-group-item-action">
+          Google Roadmap
+        </button>
+      </div>
       <br />
     </div>
     <div class="toggle-bg"></div>

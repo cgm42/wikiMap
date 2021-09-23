@@ -13,6 +13,7 @@ let popupDesc = "";
 let popupTitle = "";
 let popupUrl = "";
 let mymap;
+let basemap;
 
 //Save/update marker on popup close
 const onPopupClose = (e) => {
@@ -77,6 +78,7 @@ const onMarkerClick = (e) => {
   popupUrl = data.url;
   //open marker editor
   $("#map-editor").addClass("inactive");
+  $("#basemap-editor").addClass("inactive");
   $("#marker-editor").removeClass("inactive");
   $(".toggle-form, .formwrap, .toggle-bg").addClass("active");
   // populate values
@@ -114,7 +116,40 @@ function onMapDblClick(e) {
   //toggle marker editor
   $(".toggle-form, .formwrap, .toggle-bg").addClass("active");
   $("#marker-editor").removeClass("inactive");
+  $("#marker-editor-title").focus();
+  $("#basemap-editor").addClass("inactive");
 }
+
+const onSaveMapClick = (e) => {
+  e.preventDefault();
+
+  const title = $("#map-editor-title")[0].value;
+  const desc = $("#map-editor-desc")[0].value;
+  const lat = mymap.getBounds().getCenter().lat;
+  const lng = mymap.getBounds().getCenter().lng;
+  const zoom = mymap._zoom;
+  const isPublic = true;
+  const data = { lat, lng, zoom, title, desc, isPublic };
+  if (basemap) data["basemap"] = basemap;
+  console.log("saving map to db with data :>> ", data);
+
+  $.ajax({
+    url: `/maps/${mapId}`,
+    type: "put",
+    data,
+    success: (data) => {
+      mapTitle = title;
+      mapDesc = desc;
+      $("#map-editor-title")[0].value = mapTitle;
+      $("#map-editor-desc")[0].value = mapDesc;
+      $(".toggle-form, .formwrap, .toggle-bg").removeClass("active");
+      displayAlert("Map saved!");
+    },
+    error: (err) => {
+      console.log("error", err);
+    },
+  });
+};
 
 const onMarkerDelete = (e) => {
   e.preventDefault();
@@ -125,12 +160,238 @@ const onMarkerDelete = (e) => {
     type: "delete",
     success: () => {
       mymap.removeLayer(currentMarker);
+      $("#marker-editor").trigger("reset");
+      $("#marker-editor-imgUrl")[0].value = "";
+      $(".toggle-form, .formwrap, .toggle-bg").removeClass("active");
+      displayAlert("Marker deleted!");
     },
     error: () => {
       console.log("error");
     },
   });
 };
+
+const onMapEditorButtonClick = (e) => {
+  if (!$(".toggle-form, .formwrap, .toggle-bg").hasClass("active")) {
+    //display editor if editor not visible
+    $(".toggle-form, .formwrap, .toggle-bg").addClass("active");
+    $("#marker-editor").addClass("inactive");
+    $("#basemap-editor").addClass("inactive");
+    $("#map-editor").removeClass("inactive");
+  } else if ($("#map-editor").hasClass("inactive")) {
+    //change to map menu
+    $("#marker-editor").addClass("inactive");
+    $("#basemap-editor").addClass("inactive");
+    $("#map-editor").removeClass("inactive");
+  } else {
+    //hide menu
+    $(".toggle-form, .formwrap, .toggle-bg").removeClass("active");
+    $("#map-editor").addClass("inactive");
+  }
+};
+
+const onMarkerEditorButtonClick = (e) => {
+  if (!$(".toggle-form, .formwrap, .toggle-bg").hasClass("active")) {
+    //display editor if editor not visible
+    $(".toggle-form, .formwrap, .toggle-bg").addClass("active");
+    $("#map-editor").addClass("inactive");
+    $("#basemap-editor").addClass("inactive");
+    $("#marker-editor").removeClass("inactive");
+  } else if ($("#marker-editor").hasClass("inactive")) {
+    //change to marker menu
+    $("#map-editor").addClass("inactive");
+    $("#basemap-editor").addClass("inactive");
+    $("#marker-editor").removeClass("inactive");
+  } else {
+    //hide
+    $(".toggle-form, .formwrap, .toggle-bg").removeClass("active");
+    $("#marker-editor").addClass("inactive");
+  }
+};
+
+const onBasemapMenuOpen = (e) => {
+  if (!$(".toggle-form, .formwrap, .toggle-bg").hasClass("active")) {
+    //display editor if editor not visible
+    $(".toggle-form, .formwrap, .toggle-bg").addClass("active");
+    $("#map-editor").addClass("inactive");
+    $("#marker-editor").addClass("inactive");
+    $("#basemap-editor").removeClass("inactive");
+  } else if ($("#basemap-editor").hasClass("inactive")) {
+    //change to basemap menu
+    $("#map-editor").addClass("inactive");
+    $("#marker-editor").addClass("inactive");
+    $("#basemap-editor").removeClass("inactive");
+  } else {
+    //hide
+    $(".toggle-form, .formwrap, .toggle-bg").removeClass("active");
+    $("#basemap-editor").addClass("inactive");
+  }
+};
+
+//Select basemap from list
+function onBasemapOptionClick(e) {
+  debugger;
+  $(".list-group-item-action").removeClass("active");
+  // mymap.eachLayer(function (layer) {
+  //   mymap.removeLayer(layer);
+  // });
+  if (e.target.innerText === "Watercolor") {
+    $(this).addClass("active");
+    L.tileLayer
+      .provider("Stamen.Watercolor", {
+        attribution:
+          'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      })
+      .addTo(mymap);
+  }
+  if (e.target.innerText === "Toner") {
+    $(this).addClass("active");
+    L.tileLayer
+      .provider("Stamen.Toner", {
+        attribution:
+          'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      })
+      .addTo(mymap);
+  }
+  if (e.target.innerText === "Pioneer") {
+    $(this).addClass("active");
+    L.tileLayer
+      .provider("Thunderforest.Pioneer", {
+        apikey: "61e551bcbab945a4aebfa68485b0e2c6",
+        attribution:
+          '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      })
+      .addTo(mymap);
+  }
+  if (e.target.innerText === "Transport") {
+    $(this).addClass("active");
+    L.tileLayer
+      .provider("Thunderforest.TransportDark", {
+        apikey: "61e551bcbab945a4aebfa68485b0e2c6",
+        attribution:
+          '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      })
+      .addTo(mymap);
+  }
+  if (e.target.innerText === "Google Roadmap") {
+    $(this).addClass("active");
+    var roads = L.gridLayer
+      .googleMutant({
+        type: "roadmap", // valid values are 'roadmap', 'satellite', 'terrain' and 'hybrid'
+      })
+      .addTo(mymap);
+  }
+  if (e.target.innerText === "Google Satellite") {
+    $(this).addClass("active");
+    var satellite = L.gridLayer
+      .googleMutant({
+        type: "satellite", // valid values are 'roadmap', 'satellite', 'terrain' and 'hybrid'
+      })
+      .addTo(mymap);
+  }
+  if (e.target.innerText === "Spinal") {
+    $(this).addClass("active");
+    L.tileLayer
+      .provider("Thunderforest.SpinalMap", {
+        apikey: "61e551bcbab945a4aebfa68485b0e2c6",
+        attribution:
+          '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      })
+      .addTo(mymap);
+  }
+  if (e.target.innerText === "Voyager") {
+    $(this).addClass("active");
+    var CartoDB_Voyager = L.tileLayer(
+      "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
+      {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains: "abcd",
+        maxZoom: 19,
+      }
+    );
+    CartoDB_Voyager.addTo(mymap);
+  }
+  if (e.target.innerText === "Dark Matter") {
+    $(this).addClass("active");
+    var CartoDB_DarkMatter = L.tileLayer(
+      "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+      {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains: "abcd",
+        maxZoom: 19,
+      }
+    );
+    CartoDB_DarkMatter.addTo(mymap);
+  }
+  if (e.target.innerText === "Dark") {
+    $(this).addClass("active");
+    L.tileLayer
+      .provider("MapBox", {
+        id: "mapbox/dark-v10",
+        accessToken:
+          "sk.eyJ1IjoiY2dtZW93IiwiYSI6ImNrdHEzdXZ5bDBzcTcyeG8zY3d2eDZtdWIifQ.E0aRLAKw0M-8RLA2DaxicQ",
+      })
+      .addTo(mymap);
+    basemap = "dark-v10";
+  }
+  if (e.target.innerText === "Satellite Streets") {
+    $(this).addClass("active");
+    L.tileLayer
+      .provider("MapBox", {
+        id: "mapbox/satellite-streets-v11",
+        accessToken:
+          "sk.eyJ1IjoiY2dtZW93IiwiYSI6ImNrdHEzdXZ5bDBzcTcyeG8zY3d2eDZtdWIifQ.E0aRLAKw0M-8RLA2DaxicQ",
+      })
+      .addTo(mymap);
+    basemap = "satellite-streets-v11";
+  }
+  if (e.target.innerText === "Light") {
+    $(this).addClass("active");
+    L.tileLayer
+      .provider("MapBox", {
+        id: "mapbox/light-v10",
+        accessToken:
+          "sk.eyJ1IjoiY2dtZW93IiwiYSI6ImNrdHEzdXZ5bDBzcTcyeG8zY3d2eDZtdWIifQ.E0aRLAKw0M-8RLA2DaxicQ",
+      })
+      .addTo(mymap);
+    basemap = "light-v10";
+  }
+  if (e.target.innerText === "Navigation") {
+    $(this).addClass("active");
+    L.tileLayer
+      .provider("MapBox", {
+        id: "mapbox/navigation-day-v1",
+        accessToken:
+          "sk.eyJ1IjoiY2dtZW93IiwiYSI6ImNrdHEzdXZ5bDBzcTcyeG8zY3d2eDZtdWIifQ.E0aRLAKw0M-8RLA2DaxicQ",
+      })
+      .addTo(mymap);
+    basemap = "navigation-day-v1";
+  }
+  if (e.target.innerText === "Night") {
+    $(this).addClass("active");
+    L.tileLayer
+      .provider("MapBox", {
+        id: "mapbox/navigation-night-v1",
+        accessToken:
+          "sk.eyJ1IjoiY2dtZW93IiwiYSI6ImNrdHEzdXZ5bDBzcTcyeG8zY3d2eDZtdWIifQ.E0aRLAKw0M-8RLA2DaxicQ",
+      })
+      .addTo(mymap);
+    basemap = "navigation-night-v1";
+  }
+  //the default
+  if (e.target.innerText === "Streets") {
+    $(this).addClass("active");
+    L.tileLayer
+      .provider("MapBox", {
+        id: "mapbox/streets-v11",
+        accessToken:
+          "sk.eyJ1IjoiY2dtZW93IiwiYSI6ImNrdHEzdXZ5bDBzcTcyeG8zY3d2eDZtdWIifQ.E0aRLAKw0M-8RLA2DaxicQ",
+      })
+      .addTo(mymap);
+  }
+}
 
 //======================      HELPERS     ========================
 /**
@@ -174,4 +435,13 @@ const updateMarkerHTML = (marker) => {
     marker.getPopup()._updateLayout();
     marker.openPopup();
   }, 100);
+};
+
+const displayAlert = (msg) => {
+  $("#alert").text(msg);
+  $("#alert").addClass("notification");
+  setTimeout(() => {
+    $("#alert").removeClass("notification");
+    $("#alert").text("");
+  }, 3000);
 };

@@ -2,19 +2,17 @@ const express = require("express");
 const router = express.Router();
 const mapQueries = require("../lib/maps_query");
 
-
 // GET /explore/
 router.get("/", (req, res) => {
   const templateVars = {};
-  mapQueries.getMaps()
+  mapQueries
+    .getMaps()
     .then((maps) => {
       templateVars.maps = maps;
-      res.render('featuredMaps', templateVars)
+      res.render("featuredMaps", templateVars);
     })
-    .catch(err => {
-      res
-        .status(500)
-        .json({ error: err.message });
+    .catch((err) => {
+      res.status(500).json({ error: err.message });
     });
 });
 // GET /api/maps/:map_id
@@ -89,6 +87,7 @@ router.put("/:map_id", (req, res) => {
   const description = req.body.desc;
   const isPublic = req.body.isPublic;
   const map_id = req.params.map_id;
+  const basemap = req.body.basemap;
 
   mapQueries
     .updateMap(
@@ -98,7 +97,8 @@ router.put("/:map_id", (req, res) => {
       latitude,
       isPublic,
       zoom_level,
-      map_id
+      map_id,
+      basemap
     )
     .then((row) => {
       res.status(200).send(row);

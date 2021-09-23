@@ -27,6 +27,11 @@
 
     <script type="text/javascript" src="/scripts/editMap.js"></script>
     <!-- LEAFLET -->
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnLI9h8YVMp-3mpfVBLWzGs6Yte3kPCis"
+      async
+      defer
+    ></script>
     <link
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
@@ -38,6 +43,9 @@
       integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
       crossorigin=""
     ></script>
+    <script src="http://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="/vendor/leaflet-providers.js"></script>
+    <script src="https://unpkg.com/leaflet.gridlayer.googlemutant@latest/dist/Leaflet.GoogleMutant.js"></script>
     <script>
       var id = "<%- id -%>";
       mapTitle = "<%- title -%>";
@@ -45,11 +53,13 @@
       var lng = "<%- longitude -%>";
       var lat = "<%- latitude -%>";
       var zoomLvl = "<%- zoom_level -%>";
+      basemap = "<%- basemap -%>";
     </script>
   </head>
   <body>
     <%- include('partials/_header') %> <%- include('partials/_editor') %>
     <div class="create-container">
+      <%- include('partials/_alert') %>
       <div id="mapid"></div>
     </div>
     <!--  Bootstrap JSS -->

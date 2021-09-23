@@ -25,7 +25,32 @@
 #marker-editor.inactive {
   display: none;
 }
+#basemap-editor {
+  width: 203px;
+  margin-top: 50%;
+}
+#basemap-editor.inactive {
+  display: none;
+}
 
+.notification {
+  position: absolute;
+  z-index: 500;
+  width: 50%;
+  left: 25%;
+  top: 50;
+  padding: 8px 0;
+  border-radius: 10px;
+  border: #f8f9fac2;
+  border-width: 0px 0px 0px 10px;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 16px;
+  text-transform: capitalize;
+  background-color: #f8f9fac2;
+  transition: top 0.25s, background-color 0.25s, color 0.25s;
+  display: block;
+}
 .btn-container {
   position: absolute;
   z-index: 100;
