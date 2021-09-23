@@ -118,8 +118,8 @@ function onMapDblClick(e) {
 
 const onMarkerDelete = (e) => {
   e.preventDefault();
-  console.log("delete marker?");
   const marker_id = currentMarker._icon.id;
+  console.log("deleting marker id " + marker_id);
   $.ajax({
     url: `/markers/delete/${marker_id}`,
     type: "delete",
@@ -143,11 +143,17 @@ const getValuesFromMarker = (marker) => {
   if (popupElement === undefined) return null;
   const title = popupElement.getElementsByTagName("h4")[0].textContent;
   const desc = popupElement.getElementsByTagName("p")[0].textContent;
-  if (popupElement.getElementsByClassName("imgUrl")[0] === undefined) {
+  if (
+    !popupElement.getElementsByClassName("imgUrl")[0] ||
+    !popupElement.getElementsByClassName("imgUrl")[0].attributes.src
+  ) {
     url = "";
   } else {
-    url = popupElement.getElementsByClassName("imgUrl")[0].src;
+    url =
+      popupElement.getElementsByClassName("imgUrl")[0].attributes.src
+        .textContent;
   }
+  console.log("url :>> ", url);
   const result = { title, desc, url };
   return result;
 };
@@ -165,7 +171,7 @@ const updateMarkerHTML = (marker) => {
   marker.openPopup();
 
   setTimeout(() => {
-    marker._popup._updateLayout();
+    marker.getPopup()._updateLayout();
     marker.openPopup();
   }, 100);
 };
