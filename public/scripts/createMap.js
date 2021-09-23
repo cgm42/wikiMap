@@ -19,8 +19,6 @@ $(() => {
 
   mymap.doubleClickZoom.disable();
 
-  L.tileLayer.provider("Stamen.Watercolor").addTo(mymap);
-
   /**
    * Show create map modal on page load
    */
@@ -110,38 +108,13 @@ $(() => {
   $("#delete-marker-button").on("click", onMarkerDelete);
 
   // slider control for map editor
-  $(".map-button").on("click", function () {
-    if (!$(".toggle-form, .formwrap, .toggle-bg").hasClass("active")) {
-      //display menu
-      $(".toggle-form, .formwrap, .toggle-bg").addClass("active");
-      $("#marker-editor").addClass("inactive");
-      $("#map-editor").removeClass("inactive");
-    } else if ($("#map-editor").hasClass("inactive")) {
-      //change to map menu
-      $("#marker-editor").addClass("inactive");
-      $("#map-editor").removeClass("inactive");
-    } else {
-      //hide menu
-      $(".toggle-form, .formwrap, .toggle-bg").removeClass("active");
-      $("#map-editor").addClass("inactive");
-    }
-  });
+  $(".map-button").on("click", onMapEditorButtonClick);
 
   // slider control for marker editor
-  $(".marker-button").on("click", function () {
-    if (!$(".toggle-form, .formwrap, .toggle-bg").hasClass("active")) {
-      //display
-      $(".toggle-form, .formwrap, .toggle-bg").addClass("active");
-      $("#map-editor").addClass("inactive");
-      $("#marker-editor").removeClass("inactive");
-    } else if ($("#marker-editor").hasClass("inactive")) {
-      //change to map menu
-      $("#map-editor").addClass("inactive");
-      $("#marker-editor").removeClass("inactive");
-    } else {
-      //hide
-      $(".toggle-form, .formwrap, .toggle-bg").removeClass("active");
-      $("#marker-editor").addClass("inactive");
-    }
-  });
+  $(".marker-button").on("click", onMarkerEditorButtonClick);
+
+  //slider control for basemap editor
+  $(".basemap-button").on("click", onBasemapMenuOpen);
+
+  $(".list-group-item").on("click", onBasemapOptionClick);
 });

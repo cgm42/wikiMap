@@ -25,6 +25,12 @@
 #marker-editor.inactive {
   display: none;
 }
+#basemap-editor {
+  margin-top: 50%;
+}
+#basemap-editor.inactive {
+  display: none;
+}
 
 .btn-container {
   position: absolute;

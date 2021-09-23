@@ -132,6 +132,88 @@ const onMarkerDelete = (e) => {
   });
 };
 
+const onMapEditorButtonClick = (e) => {
+  if (!$(".toggle-form, .formwrap, .toggle-bg").hasClass("active")) {
+    //display editor if editor not visible
+    $(".toggle-form, .formwrap, .toggle-bg").addClass("active");
+    $("#marker-editor").addClass("inactive");
+    $("#basemap-editor").addClass("inactive");
+    $("#map-editor").removeClass("inactive");
+  } else if ($("#map-editor").hasClass("inactive")) {
+    //change to map menu
+    $("#marker-editor").addClass("inactive");
+    $("#basemap-editor").addClass("inactive");
+    $("#map-editor").removeClass("inactive");
+  } else {
+    //hide menu
+    $(".toggle-form, .formwrap, .toggle-bg").removeClass("active");
+    $("#map-editor").addClass("inactive");
+  }
+};
+
+const onMarkerEditorButtonClick = (e) => {
+  if (!$(".toggle-form, .formwrap, .toggle-bg").hasClass("active")) {
+    //display editor if editor not visible
+    $(".toggle-form, .formwrap, .toggle-bg").addClass("active");
+    $("#map-editor").addClass("inactive");
+    $("#basemap-editor").addClass("inactive");
+    $("#marker-editor").removeClass("inactive");
+  } else if ($("#marker-editor").hasClass("inactive")) {
+    //change to marker menu
+    $("#map-editor").addClass("inactive");
+    $("#basemap-editor").addClass("inactive");
+    $("#marker-editor").removeClass("inactive");
+  } else {
+    //hide
+    $(".toggle-form, .formwrap, .toggle-bg").removeClass("active");
+    $("#marker-editor").addClass("inactive");
+  }
+};
+
+const onBasemapMenuOpen = (e) => {
+  if (!$(".toggle-form, .formwrap, .toggle-bg").hasClass("active")) {
+    //display editor if editor not visible
+    $(".toggle-form, .formwrap, .toggle-bg").addClass("active");
+    $("#map-editor").addClass("inactive");
+    $("#marker-editor").addClass("inactive");
+    $("#basemap-editor").removeClass("inactive");
+  } else if ($("#basemap-editor").hasClass("inactive")) {
+    //change to basemap menu
+    $("#map-editor").addClass("inactive");
+    $("#marker-editor").addClass("inactive");
+    $("#basemap-editor").removeClass("inactive");
+  } else {
+    //hide
+    $(".toggle-form, .formwrap, .toggle-bg").removeClass("active");
+    $("#basemap-editor").addClass("inactive");
+  }
+};
+
+function onBasemapOptionClick(e) {
+  debugger;
+  $(".list-group-item-action").removeClass("active");
+  if (e.target.innerText === "Stamen Watercolor") {
+    $(this).addClass("active");
+    L.tileLayer.provider("Stamen.Watercolor").addTo(mymap);
+  }
+  if (e.target.innerText === "Stamen Toner") {
+    $(this).addClass("active");
+    L.tileLayer.provider("Stamen.Toner").addTo(mymap);
+  }
+  if (e.target.innerText === "Stamen Terrain") {
+    $(this).addClass("active");
+    L.tileLayer.provider("Stamen.Terrain").addTo(mymap);
+  }
+  if (e.target.innerText === "HikeBike HillShading") {
+    $(this).addClass("active");
+    L.tileLayer.provider("HikeBike.HillShading").addTo(mymap);
+  }
+  if (e.target.innerText === "CyclOSM") {
+    $(this).addClass("active");
+    L.tileLayer.provider("CyclOSM").addTo(mymap);
+  }
+}
+
 //======================      HELPERS     ========================
 /**
  *
