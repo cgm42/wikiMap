@@ -24,6 +24,12 @@ $(() => {
   ).addTo(mymap);
 
   mymap.doubleClickZoom.disable();
+  //---------------------------
+
+  ctrlCoor = new L.Control.Coordinates();
+  ctrlCoor.addTo(mymap);
+
+  //------------------------
 
   const loadMarkers = (data) => {
     for (markerData of data) {

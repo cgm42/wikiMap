@@ -19,6 +19,9 @@ $(() => {
 
   mymap.doubleClickZoom.disable();
 
+  ctrlCoor = new L.Control.Coordinates();
+  ctrlCoor.addTo(mymap);
+
   /**
    * Show create map modal on page load
    */
@@ -80,11 +83,11 @@ $(() => {
   $("#save-map-button").on("click", onSaveMapClick);
 
   //delete map from db and back to home
-  $("#delete-map-button").on("click", (e) => {
-    e.preventDefault();
-    console.log("mymap :>> ", mymap);
-    //TODO:
-  });
+  // $("#delete-map-button").on("click", (e) => {
+  //   e.preventDefault();
+  //   console.log("mymap :>> ", mymap);
+  //   //TODO:
+  // });
 
   $("#delete-marker-button").on("click", onMarkerDelete);
 
