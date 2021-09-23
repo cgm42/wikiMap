@@ -77,6 +77,7 @@ const onMarkerClick = (e) => {
   popupUrl = data.url;
   //open marker editor
   $("#map-editor").addClass("inactive");
+  $("#basemasp-editor").addClass("inactive");
   $("#marker-editor").removeClass("inactive");
   $(".toggle-form, .formwrap, .toggle-bg").addClass("active");
   // populate values
@@ -114,6 +115,7 @@ function onMapDblClick(e) {
   //toggle marker editor
   $(".toggle-form, .formwrap, .toggle-bg").addClass("active");
   $("#marker-editor").removeClass("inactive");
+  $("#basemap-editor").addClass("inactive");
 }
 
 const onMarkerDelete = (e) => {
@@ -189,28 +191,111 @@ const onBasemapMenuOpen = (e) => {
   }
 };
 
+//Select basemap from list
 function onBasemapOptionClick(e) {
   debugger;
   $(".list-group-item-action").removeClass("active");
   if (e.target.innerText === "Stamen Watercolor") {
     $(this).addClass("active");
-    L.tileLayer.provider("Stamen.Watercolor").addTo(mymap);
+    L.tileLayer
+      .provider("Stamen.Watercolor", {
+        attribution:
+          'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      })
+      .addTo(mymap);
   }
   if (e.target.innerText === "Stamen Toner") {
     $(this).addClass("active");
-    L.tileLayer.provider("Stamen.Toner").addTo(mymap);
+    L.tileLayer
+      .provider("Stamen.Toner", {
+        attribution:
+          'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      })
+      .addTo(mymap);
   }
-  if (e.target.innerText === "Stamen Terrain") {
+  if (e.target.innerText === "Pioneer") {
     $(this).addClass("active");
-    L.tileLayer.provider("Stamen.Terrain").addTo(mymap);
+    L.tileLayer
+      .provider("Thunderforest.Pioneer", {
+        apikey: "61e551bcbab945a4aebfa68485b0e2c6",
+        attribution:
+          '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      })
+      .addTo(mymap);
   }
-  if (e.target.innerText === "HikeBike HillShading") {
+  if (e.target.innerText === "Transport") {
     $(this).addClass("active");
-    L.tileLayer.provider("HikeBike.HillShading").addTo(mymap);
+    L.tileLayer
+      .provider("Thunderforest.TransportDark", {
+        apikey: "61e551bcbab945a4aebfa68485b0e2c6",
+        attribution:
+          '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      })
+      .addTo(mymap);
   }
-  if (e.target.innerText === "CyclOSM") {
+  if (e.target.innerText === "Google Roadmap") {
     $(this).addClass("active");
-    L.tileLayer.provider("CyclOSM").addTo(mymap);
+    var roads = L.gridLayer
+      .googleMutant({
+        type: "roadmap", // valid values are 'roadmap', 'satellite', 'terrain' and 'hybrid'
+      })
+      .addTo(mymap);
+  }
+  if (e.target.innerText === "Google Satellite") {
+    $(this).addClass("active");
+    var satellite = L.gridLayer
+      .googleMutant({
+        type: "satellite", // valid values are 'roadmap', 'satellite', 'terrain' and 'hybrid'
+      })
+      .addTo(mymap);
+  }
+  if (e.target.innerText === "Spinal") {
+    $(this).addClass("active");
+    L.tileLayer
+      .provider("Thunderforest.SpinalMap", {
+        apikey: "61e551bcbab945a4aebfa68485b0e2c6",
+        attribution:
+          '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      })
+      .addTo(mymap);
+  }
+  if (e.target.innerText === "Spinal") {
+    $(this).addClass("active");
+    L.tileLayer
+      .provider("Thunderforest.SpinalMap", {
+        apikey: "61e551bcbab945a4aebfa68485b0e2c6",
+        attribution:
+          '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      })
+      .addTo(mymap);
+  }
+  if (e.target.innerText === "Voyager") {
+    $(this).addClass("active");
+    var CartoDB_Voyager = L.tileLayer(
+      "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
+      {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains: "abcd",
+        maxZoom: 19,
+      }
+    );
+
+    CartoDB_Voyager.addTo(mymap);
+  }
+  if (e.target.innerText === "Dark Matter") {
+    $(this).addClass("active");
+    var CartoDB_DarkMatter = L.tileLayer(
+      "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+      {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains: "abcd",
+        maxZoom: 19,
+      }
+    );
+
+    CartoDB_DarkMatter.addTo(mymap);
   }
 }
 
