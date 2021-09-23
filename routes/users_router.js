@@ -5,25 +5,12 @@ const mapQueries = require('../lib/maps_query');
 const favQueries = require('../lib/favourites_query');
 
 // GET /profile/:username
-// router.get('/:username', (req, res) => {
-//   userQueries.getUserByUsername(req.params.username)
-//     .then((user) => {
-//       res.json({ user });
-//     })
-//     .catch(err => {
-//       res
-//         .status(500)
-//         .json({ error: err.message });
-//     });
-// });
-
-// GET /profile/:user_id
-router.get('/:user_id', (req, res) => {
+router.get('/:username', (req, res) => {
   const templateVars = {};
-  req.session.user_id = req.params.user_id;
-  userQueries.getUserById(req.params.user_id)
+  userQueries.getUserByUsername(req.params.username)
     .then((user) => {
       templateVars.user = user;
+      templateVars.sessionId = req.session.user_id
       return mapQueries.getMaps()
     }).then((maps) => {
       templateVars.maps = maps;

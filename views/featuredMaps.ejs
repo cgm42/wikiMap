@@ -13,14 +13,14 @@
     <link rel="stylesheet" href="/styles/header.css" type="text/css" />
     <link rel="stylesheet" href="/styles/footer.css" type="text/css" />
     <link rel="stylesheet" href="/styles/featuredMaps.css" type="text/css" />
-    <title>Featured Maps - WikiMap</title>
+    <title>Explore Maps - WikiMap</title>
   </head>
   <body>
     <%- include('partials/_header') %>
     <main>
       <section class="featured-maps">
         <div class="container mt-2">
-          <h1><span class="badge"> Featured Maps </span></h1>
+          <h1><span class="badge"> Recent Maps </span></h1>
           <div class="row">
             <% for(let map in maps) { %> <% if(maps[map].ispublic){ %>
 
