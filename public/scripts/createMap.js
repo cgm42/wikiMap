@@ -19,6 +19,8 @@ $(() => {
 
   mymap.doubleClickZoom.disable();
 
+  L.tileLayer.provider("Stamen.Watercolor").addTo(mymap);
+
   /**
    * Show create map modal on page load
    */
