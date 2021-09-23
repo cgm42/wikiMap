@@ -28,7 +28,7 @@
               <div class="card card-block">
                 <img
                   class="card-img-top"
-                  src="http://dummyimage.com/303x180.png/66ADC2/ffffff"
+                  src="https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/<%=maps[map].longitude%>,<%=maps[map].latitude%>,11.5,0/303x180?access_token=pk.eyJ1IjoiYm9ic2giLCJhIjoiY2t0d2E5aGx4MDhvejJybndjM2hvNWc5NSJ9.o3jxq8IEZVKfrJutkzorww"
                   alt="Card image cap"
                 />
                 <div class="card-block">
@@ -42,7 +42,7 @@
                     <form method="GET" action="/maps/<%=maps[map].id%>">
                       <button
                         type="submit"
-                        class="btn btn-primary justify-content-start viewbtn"
+                        class="btn glow-on-hover justify-content-start viewbtn"
                       >
                         View
                       </button>
