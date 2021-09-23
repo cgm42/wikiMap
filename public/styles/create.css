@@ -32,6 +32,7 @@
 #basemap-editor.inactive {
   display: none;
 }
+
 .notification {
   position: absolute;
   z-index: 500;

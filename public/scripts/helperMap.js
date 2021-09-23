@@ -142,6 +142,7 @@ const onSaveMapClick = (e) => {
       mapDesc = desc;
       $("#map-editor-title")[0].value = mapTitle;
       $("#map-editor-desc")[0].value = mapDesc;
+      $(".toggle-form, .formwrap, .toggle-bg").removeClass("active");
       displayAlert("Map saved!");
     },
     error: (err) => {
