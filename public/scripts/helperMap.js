@@ -78,7 +78,7 @@ const onMarkerClick = (e) => {
   popupUrl = data.url;
   //open marker editor
   $("#map-editor").addClass("inactive");
-  $("#basemasp-editor").addClass("inactive");
+  $("#basemap-editor").addClass("inactive");
   $("#marker-editor").removeClass("inactive");
   $(".toggle-form, .formwrap, .toggle-bg").addClass("active");
   // populate values
