@@ -1,15 +1,8 @@
 $(() => {
-  let isPopupOpen = false; //create new marker only allowed if false
-  let currentMarker;
-  let mapTitle = "";
-  let mapDesc = "";
-  let popupTitle = "";
-  let popupDesc = "";
-  let popupUrl = "";
-  let mapId;
-
-  var mymap = L.map("mapid");
-  mymap.locate({ setView: true, maxZoom: 12 });
+  /**
+   * Load map baesd on location service
+   */
+  mymap = L.map("mapid").locate({ setView: true, maxZoom: 12 });
   L.tileLayer(
     "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
     {
@@ -26,13 +19,15 @@ $(() => {
 
   mymap.doubleClickZoom.disable();
 
+  /**
+   * Show create map modal on page load
+   */
   $("#myModalHorizontal").modal("show");
-
   $("#create-map-button").on("click", (e) => {
     e.preventDefault();
     mapTitle = $("#new-map-title")[0].value;
     mapDesc = $("#new-map-desc")[0].value;
-    debugger;
+
     const lat = mymap.getBounds().getCenter().lat;
     const lng = mymap.getBounds().getCenter().lng;
     const zoom = mymap._zoom;
@@ -54,108 +49,6 @@ $(() => {
     });
   });
 
-  //Save marker on popup close
-  const onPopupClose = (e) => {
-    const title = $("#marker-editor-title")[0].value;
-    const desc = $("#marker-editor-desc")[0].value;
-    const imgUrl = $("#marker-editor-imgUrl")[0].value;
-    const lat = currentMarker.getLatLng().lat;
-    const lng = currentMarker.getLatLng().lng;
-    console.log(currentMarker._icon.id);
-    $("#marker-editor").trigger("reset");
-    // Save new marker to db if no marker id
-    if (currentMarker._icon.id.length === 0) {
-      return $.ajax({
-        url: "markers",
-        type: "post",
-        data: { mapId, title, desc, imgUrl, lat, lng },
-        success: (data) => {
-          currentMarker._icon.id = data.id;
-          isPopupOpen = false;
-        },
-        error: () => {
-          console.log("error");
-        },
-      });
-    } else {
-      //If id available, update existing marker in db
-      $.ajax({
-        url: `markers/${currentMarker._icon.id}`,
-        type: "put",
-        data: { title, desc, imgUrl },
-        success: (data) => {
-          isPopupOpen = false;
-        },
-        error: () => {
-          console.log("error");
-        },
-      });
-    }
-  };
-
-  //open editor and populate with existing value when marker is clicked
-  const onMarkerClick = (e) => {
-    currentMarker = e.target;
-    //open marker editor
-    $(".toggle-form, .formwrap, .toggle-bg").addClass("active");
-    $("#map-editor").addClass("inactive");
-    $("#marker-editor").removeClass("inactive");
-    //get marker content
-    popupTitle = currentMarker._popup._contentNode.firstElementChild.innerText;
-    popupDesc =
-      currentMarker._popup._contentNode.firstElementChild.nextSibling.nextSibling.data.trim();
-    //TODO: Fix imageurl bug displaying 8080
-    popupUrl =
-      currentMarker._popup._contentNode.getElementsByTagName("img")[0].src;
-    // populate values
-    $("#marker-editor-title")[0].value = popupTitle;
-    $("#marker-editor-desc")[0].value = popupDesc;
-    $("#marker-editor-imgUrl")[0].value = popupUrl;
-  };
-
-  //click anywhere on map to hide menu
-  function onMapClick(e) {
-    $(".toggle-form, .formwrap, .toggle-bg").removeClass("active");
-  }
-
-  //create a new marker on dblclick
-  function onMapDblClick(e) {
-    if (isPopupOpen) {
-      return;
-    }
-    if (mapId === undefined) {
-      alert("Create a name & desc first!");
-      return;
-    }
-
-    popupTitle = "";
-    popupDesc = "";
-    popupUrl = "";
-    const lat = e.latlng.lat;
-    const lng = e.latlng.lng;
-    //generate a random markerId for temp use
-    //const markerId = Math.floor(Math.random() * 100000000);
-    currentMarker = L.marker([lat, lng]).addTo(mymap);
-    //save content on popup close
-    currentMarker.on("popupclose", onPopupClose);
-    //select a marker on click
-    currentMarker.on("click", onMarkerClick);
-    isPopupOpen = true;
-    //currentMarker._icon.id = markerId;
-    //toggle marker editor
-    $(".toggle-form, .formwrap, .toggle-bg").addClass("active");
-    $("#marker-editor").removeClass("inactive");
-  }
-
-  //bind a popup with updated html to marker
-  const updateMarkerHTML = (marker) => {
-    let popupHTML = `
-    <h3>${popupTitle}</h3><br>
-    ${popupDesc}<br>
-    <img src="${popupUrl}"/>`;
-    marker.bindPopup(popupHTML).openPopup();
-  };
-
   //sync typing in popup and editor for title
   $("#marker-editor-title").on("input", (e) => {
     const input = e.target.value;
@@ -170,17 +63,17 @@ $(() => {
     updateMarkerHTML(currentMarker);
   });
 
-  //sync image in popup
-  $("#marker-editor-imgUrl").on("input", (e) => {
-    const input = e.target.value;
-    popupUrl = input;
+  //save imgurl from modal
+  $("#save-image-button").on("click", (e) => {
+    popupUrl = $("#marker-editor-imgUrl")[0].value;
     updateMarkerHTML(currentMarker);
+    $("#imageModal").modal("hide");
   });
 
   mymap.on("click", onMapClick);
   mymap.on("dblclick", onMapDblClick);
 
-  //save map to db
+  //save(update) map to db
   $("#save-map-button").on("click", (e) => {
     e.preventDefault();
 
@@ -193,14 +86,14 @@ $(() => {
 
     $.ajax({
       url: "/maps",
-      type: "put", //TODO: update to put
+      type: "put",
       data: { lat, lng, zoom, title, desc, isPublic },
       success: (data) => {
         $("#map-editor-title")[0].value = mapTitle;
         $("#map-editor-desc")[0].value = mapDesc;
       },
-      error: () => {
-        console.log("error");
+      error: (err) => {
+        console.log("error", err);
       },
     });
   });
@@ -212,9 +105,7 @@ $(() => {
     //TODO:
   });
 
-  $("#delete-marker-button").on("click", (e) => {
-    //TODO:
-  });
+  $("#delete-marker-button").on("click", onMarkerDelete);
 
   // slider control for map editor
   $(".map-button").on("click", function () {
