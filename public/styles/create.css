@@ -57,6 +57,9 @@
   z-index: 100;
   right: 0;
 }
+#delete-map-button {
+  display: none;
+}
 
 /* editor panel */
 .btn {
