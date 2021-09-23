@@ -429,3 +429,12 @@ const updateMarkerHTML = (marker) => {
     marker.openPopup();
   }, 100);
 };
+
+const displayAlert = (msg) => {
+  $("#alert").text(msg);
+  $("#alert").addClass("notification");
+  setTimeout(() => {
+    $("#alert").removeClass("notification");
+    $("#alert").text("");
+  }, 3000);
+};

@@ -42,6 +42,9 @@ $(() => {
         $("#myModalHorizontal").modal("hide");
         $("#map-editor-title")[0].value = mapTitle;
         $("#map-editor-desc")[0].value = mapDesc;
+        displayAlert(
+          "Welcome to your map! Double click anywhere to create a marker."
+        );
       },
       error: () => {
         console.log("error");
