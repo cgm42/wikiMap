@@ -39,7 +39,7 @@ router.post('/:map_id/add', (req, res) => {
   const userID = req.session.user_id;
   favQueries.addFavourite(req.params.map_id, userID)
     .then(dbres => {
-      res.redirect(`/featured/`);
+      res.redirect(`/explore/`);
     })
 })
 
