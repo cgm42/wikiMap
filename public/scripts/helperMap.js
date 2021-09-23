@@ -195,7 +195,10 @@ const onBasemapMenuOpen = (e) => {
 function onBasemapOptionClick(e) {
   debugger;
   $(".list-group-item-action").removeClass("active");
-  if (e.target.innerText === "Stamen Watercolor") {
+  mymap.eachLayer(function (layer) {
+    mymap.removeLayer(layer);
+  });
+  if (e.target.innerText === "Watercolor") {
     $(this).addClass("active");
     L.tileLayer
       .provider("Stamen.Watercolor", {
@@ -204,7 +207,7 @@ function onBasemapOptionClick(e) {
       })
       .addTo(mymap);
   }
-  if (e.target.innerText === "Stamen Toner") {
+  if (e.target.innerText === "Toner") {
     $(this).addClass("active");
     L.tileLayer
       .provider("Stamen.Toner", {
@@ -259,16 +262,6 @@ function onBasemapOptionClick(e) {
       })
       .addTo(mymap);
   }
-  if (e.target.innerText === "Spinal") {
-    $(this).addClass("active");
-    L.tileLayer
-      .provider("Thunderforest.SpinalMap", {
-        apikey: "61e551bcbab945a4aebfa68485b0e2c6",
-        attribution:
-          '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-      })
-      .addTo(mymap);
-  }
   if (e.target.innerText === "Voyager") {
     $(this).addClass("active");
     var CartoDB_Voyager = L.tileLayer(
@@ -280,7 +273,6 @@ function onBasemapOptionClick(e) {
         maxZoom: 19,
       }
     );
-
     CartoDB_Voyager.addTo(mymap);
   }
   if (e.target.innerText === "Dark Matter") {
@@ -294,8 +286,67 @@ function onBasemapOptionClick(e) {
         maxZoom: 19,
       }
     );
-
     CartoDB_DarkMatter.addTo(mymap);
+  }
+  if (e.target.innerText === "Dark") {
+    $(this).addClass("active");
+    L.tileLayer
+      .provider("MapBox", {
+        id: "mapbox/dark-v10",
+        accessToken:
+          "sk.eyJ1IjoiY2dtZW93IiwiYSI6ImNrdHEzdXZ5bDBzcTcyeG8zY3d2eDZtdWIifQ.E0aRLAKw0M-8RLA2DaxicQ",
+      })
+      .addTo(mymap);
+  }
+  if (e.target.innerText === "Satellite Streets") {
+    $(this).addClass("active");
+    L.tileLayer
+      .provider("MapBox", {
+        id: "mapbox/satellite-streets-v11",
+        accessToken:
+          "sk.eyJ1IjoiY2dtZW93IiwiYSI6ImNrdHEzdXZ5bDBzcTcyeG8zY3d2eDZtdWIifQ.E0aRLAKw0M-8RLA2DaxicQ",
+      })
+      .addTo(mymap);
+  }
+  if (e.target.innerText === "Light") {
+    $(this).addClass("active");
+    L.tileLayer
+      .provider("MapBox", {
+        id: "mapbox/light-v10",
+        accessToken:
+          "sk.eyJ1IjoiY2dtZW93IiwiYSI6ImNrdHEzdXZ5bDBzcTcyeG8zY3d2eDZtdWIifQ.E0aRLAKw0M-8RLA2DaxicQ",
+      })
+      .addTo(mymap);
+  }
+  if (e.target.innerText === "Navigation") {
+    $(this).addClass("active");
+    L.tileLayer
+      .provider("MapBox", {
+        id: "mapbox/navigation-day-v1",
+        accessToken:
+          "sk.eyJ1IjoiY2dtZW93IiwiYSI6ImNrdHEzdXZ5bDBzcTcyeG8zY3d2eDZtdWIifQ.E0aRLAKw0M-8RLA2DaxicQ",
+      })
+      .addTo(mymap);
+  }
+  if (e.target.innerText === "Streets") {
+    $(this).addClass("active");
+    L.tileLayer
+      .provider("MapBox", {
+        id: "mapbox/streets-v11",
+        accessToken:
+          "sk.eyJ1IjoiY2dtZW93IiwiYSI6ImNrdHEzdXZ5bDBzcTcyeG8zY3d2eDZtdWIifQ.E0aRLAKw0M-8RLA2DaxicQ",
+      })
+      .addTo(mymap);
+  }
+  if (e.target.innerText === "Night") {
+    $(this).addClass("active");
+    L.tileLayer
+      .provider("MapBox", {
+        id: "mapbox/navigation-night-v1",
+        accessToken:
+          "sk.eyJ1IjoiY2dtZW93IiwiYSI6ImNrdHEzdXZ5bDBzcTcyeG8zY3d2eDZtdWIifQ.E0aRLAKw0M-8RLA2DaxicQ",
+      })
+      .addTo(mymap);
   }
 }
 
