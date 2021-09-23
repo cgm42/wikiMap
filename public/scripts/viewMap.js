@@ -43,4 +43,20 @@ $(() => {
 
   let ctrlCoor = new L.Control.Coordinates();
   ctrlCoor.addTo(mymap);
+
+  L.easyButton("fa-star", function () {
+    console.log("clicked");
+    console.log(id);
+    $.ajax({
+      url: `/favourites/addFromMap/${id}`,
+      type: "post",
+      success: () => {
+        console.log("added");
+        alert("Added as your fav!");
+      },
+      error: () => {
+        console.log("error");
+      },
+    });
+  }).addTo(mymap);
 });
