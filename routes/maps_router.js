@@ -3,7 +3,7 @@ const router = express.Router();
 const mapQueries = require("../lib/maps_query");
 
 
-// GET /featured/
+// GET /explore/
 router.get("/", (req, res) => {
   const templateVars = {};
   mapQueries.getMaps()
@@ -47,9 +47,9 @@ router.get("/:map_id", (req, res) => {
 
 // POST /:map_id/delete
 router.post("/:map_id/delete", (req, res) => {
-  const userID = req.session.user_id;
+  const userName = req.session.username;
   mapQueries.removeMapById(req.params.map_id).then((dbres) => {
-    res.redirect(`/profile/${userID}`);
+    res.redirect(`/profile/${userName}`);
   });
 });
 
