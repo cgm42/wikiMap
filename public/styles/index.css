@@ -1,10 +1,11 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,100,900);
 html body {
   height: 100vh;
 }
 
-html body .bg {
+.bg {
   /* The image used */
-  background-image: url("https://cdn.pixabay.com/photo/2016/08/24/14/29/earth-1617121_960_720.jpg");
+  background-image: url("https://images.unsplash.com/photo-1500521499834-d1d533b0b958?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=774&q=80");
   /* Half height */
   height: 50%;
   padding-top: 0;
@@ -20,14 +21,81 @@ display: flex;
 justify-content:center;
 align-items: center;
 }
+.btn-2 {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  font-size: 2.5em;
+  color:#fff;
+  letter-spacing: 0;
+}
+
+.btn-2:hover,
+.btn-2:active {
+  letter-spacing: 5px;
+}
+
+.btn-2:after,
+.btn-2:before {
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  border: 1px solid rgba(255, 255, 255, 0);
+  bottom: 0px;
+  content: " ";
+  display: block;
+  margin: 0 auto;
+  position: relative;
+  -webkit-transition: all 280ms ease-in-out;
+          transition: all 280ms ease-in-out;
+  width: 0;
+}
+
+.btn-2:hover:after,
+.btn-2:hover:before {
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  border-color: #fff;
+  -webkit-transition: width 350ms ease-in-out;
+          transition: width 350ms ease-in-out;
+  width: 70%;
+}
+
+.btn-2:hover:before {
+  bottom: auto;
+  top: 0;
+  width: 70%;
+}
+
 .index-bottom{
   display: flex;
-  justify-content:space-evenly;
+  flex-direction: column;
+  justify-content:center;
   align-items:center;
-  padding: 20px;
-  font-family: 'Open Sans', sans-serif;
-  word-wrap: break-word;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  text-align: center;
 }
-#explore{
-  color: white;
+.left{
+  vertical-align: top;
+}
+@media only screen and (min-width: 768px) {
+  .index-bottom{
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+    align-items:center;
+    padding-left:200px;
+    padding-right:200px;
+    padding-top:100px;
+    padding-bottom:100px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    text-align: center;
+  }
+  .left{
+    width:50%;
+    max-width: 470px;
+    vertical-align: top;
+    padding-left:30px;
+    padding-right:30px;
+  }
 }

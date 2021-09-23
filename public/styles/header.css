@@ -1,5 +1,8 @@
-.navbar {
-  background-color: none;
+@media (min-width: 992px) {
+  .navbar-expand-lg {
+    padding-right: 200px;
+    padding-left: 200px;
+  }
 }
 .navbar .navbar-nav .nav-link {
   color: #fff;
