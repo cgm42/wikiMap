@@ -15,7 +15,7 @@ $(() => {
       attribution:
         'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
       maxZoom: 18,
-      id: "mapbox/streets-v11",
+      id: `mapbox/${basemap}`,
       tileSize: 512,
       zoomOffset: -1,
       accessToken:
@@ -78,29 +78,7 @@ $(() => {
   mymap.on("dblclick", onMapDblClick);
 
   //save(update) map to db
-  $("#save-map-button").on("click", (e) => {
-    e.preventDefault();
-
-    const title = $("#map-editor-title")[0].value;
-    const desc = $("#map-editor-desc")[0].value;
-    const lat = mymap.getBounds().getCenter().lat;
-    const lng = mymap.getBounds().getCenter().lng;
-    const zoom = mymap._zoom;
-    const isPublic = true;
-
-    $.ajax({
-      url: `/maps/${mapId}`,
-      type: "put",
-      data: { lat, lng, zoom, title, desc, isPublic },
-      success: (data) => {
-        $("#map-editor-title")[0].value = mapTitle;
-        $("#map-editor-desc")[0].value = mapDesc;
-      },
-      error: () => {
-        console.log("error");
-      },
-    });
-  });
+  $("#save-map-button").on("click", onSaveMapClick);
 
   //delete map from db and back to home
   $("#delete-map-button").on("click", (e) => {

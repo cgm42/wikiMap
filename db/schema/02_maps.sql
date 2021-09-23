@@ -8,5 +8,6 @@ CREATE TABLE maps (
   latitude DOUBLE PRECISION NOT NULL,
   isPublic BOOLEAN NOT NULL DEFAULT true,
   created_on TIMESTAMP NOT NULL DEFAULT NOW(),
-  zoom_level INTEGER NOT NULL
+  zoom_level INTEGER NOT NULL,
+  basemap VARCHAR(50) DEFAULT 'streets-v11'
 );

@@ -13,6 +13,7 @@ let popupDesc = "";
 let popupTitle = "";
 let popupUrl = "";
 let mymap;
+let basemap;
 
 //Save/update marker on popup close
 const onPopupClose = (e) => {
@@ -118,6 +119,33 @@ function onMapDblClick(e) {
   $("#basemap-editor").addClass("inactive");
 }
 
+const onSaveMapClick = (e) => {
+  e.preventDefault();
+
+  const title = $("#map-editor-title")[0].value;
+  const desc = $("#map-editor-desc")[0].value;
+  const lat = mymap.getBounds().getCenter().lat;
+  const lng = mymap.getBounds().getCenter().lng;
+  const zoom = mymap._zoom;
+  const isPublic = true;
+  const data = { lat, lng, zoom, title, desc, isPublic };
+  if (basemap) data["basemap"] = basemap;
+  console.log("saving map to db with data :>> ", data);
+
+  $.ajax({
+    url: `/maps/${mapId}`,
+    type: "put",
+    data,
+    success: (data) => {
+      $("#map-editor-title")[0].value = mapTitle;
+      $("#map-editor-desc")[0].value = mapDesc;
+    },
+    error: (err) => {
+      console.log("error", err);
+    },
+  });
+};
+
 const onMarkerDelete = (e) => {
   e.preventDefault();
   const marker_id = currentMarker._icon.id;
@@ -195,9 +223,9 @@ const onBasemapMenuOpen = (e) => {
 function onBasemapOptionClick(e) {
   debugger;
   $(".list-group-item-action").removeClass("active");
-  mymap.eachLayer(function (layer) {
-    mymap.removeLayer(layer);
-  });
+  // mymap.eachLayer(function (layer) {
+  //   mymap.removeLayer(layer);
+  // });
   if (e.target.innerText === "Watercolor") {
     $(this).addClass("active");
     L.tileLayer
@@ -297,6 +325,7 @@ function onBasemapOptionClick(e) {
           "sk.eyJ1IjoiY2dtZW93IiwiYSI6ImNrdHEzdXZ5bDBzcTcyeG8zY3d2eDZtdWIifQ.E0aRLAKw0M-8RLA2DaxicQ",
       })
       .addTo(mymap);
+    basemap = "dark-v10";
   }
   if (e.target.innerText === "Satellite Streets") {
     $(this).addClass("active");
@@ -307,6 +336,7 @@ function onBasemapOptionClick(e) {
           "sk.eyJ1IjoiY2dtZW93IiwiYSI6ImNrdHEzdXZ5bDBzcTcyeG8zY3d2eDZtdWIifQ.E0aRLAKw0M-8RLA2DaxicQ",
       })
       .addTo(mymap);
+    basemap = "satellite-streets-v11";
   }
   if (e.target.innerText === "Light") {
     $(this).addClass("active");
@@ -317,6 +347,7 @@ function onBasemapOptionClick(e) {
           "sk.eyJ1IjoiY2dtZW93IiwiYSI6ImNrdHEzdXZ5bDBzcTcyeG8zY3d2eDZtdWIifQ.E0aRLAKw0M-8RLA2DaxicQ",
       })
       .addTo(mymap);
+    basemap = "light-v10";
   }
   if (e.target.innerText === "Navigation") {
     $(this).addClass("active");
@@ -327,22 +358,25 @@ function onBasemapOptionClick(e) {
           "sk.eyJ1IjoiY2dtZW93IiwiYSI6ImNrdHEzdXZ5bDBzcTcyeG8zY3d2eDZtdWIifQ.E0aRLAKw0M-8RLA2DaxicQ",
       })
       .addTo(mymap);
-  }
-  if (e.target.innerText === "Streets") {
-    $(this).addClass("active");
-    L.tileLayer
-      .provider("MapBox", {
-        id: "mapbox/streets-v11",
-        accessToken:
-          "sk.eyJ1IjoiY2dtZW93IiwiYSI6ImNrdHEzdXZ5bDBzcTcyeG8zY3d2eDZtdWIifQ.E0aRLAKw0M-8RLA2DaxicQ",
-      })
-      .addTo(mymap);
+    basemap = "navigation-day-v1";
   }
   if (e.target.innerText === "Night") {
     $(this).addClass("active");
     L.tileLayer
       .provider("MapBox", {
         id: "mapbox/navigation-night-v1",
+        accessToken:
+          "sk.eyJ1IjoiY2dtZW93IiwiYSI6ImNrdHEzdXZ5bDBzcTcyeG8zY3d2eDZtdWIifQ.E0aRLAKw0M-8RLA2DaxicQ",
+      })
+      .addTo(mymap);
+    basemap = "navigation-night-v1";
+  }
+  //the default
+  if (e.target.innerText === "Streets") {
+    $(this).addClass("active");
+    L.tileLayer
+      .provider("MapBox", {
+        id: "mapbox/streets-v11",
         accessToken:
           "sk.eyJ1IjoiY2dtZW93IiwiYSI6ImNrdHEzdXZ5bDBzcTcyeG8zY3d2eDZtdWIifQ.E0aRLAKw0M-8RLA2DaxicQ",
       })
