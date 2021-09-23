@@ -15,7 +15,7 @@ module.exports = (db) => {
               [
                 req.params.username,
                 "$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u",
-                "https://robohash.org/etconsecteturalias.png?size=50x50&set=set1",
+                "https://robohash.org/etconsecteturalias.png",
               ]
             )
             .then((result) => result.rows[0]);
@@ -25,7 +25,7 @@ module.exports = (db) => {
       .then((row) => {
         req.session.username = row.user_name
         req.session.user_id = row.id;
-        res.redirect("/");
+        res.redirect(`/profile/${req.session.username}`);
       })
       .catch((err) => {
         res.status(500).json({ error: err.message });
