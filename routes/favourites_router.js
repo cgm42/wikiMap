@@ -29,18 +29,27 @@ router.get("/:favourite_id", (req, res) => {
 // POST /:favourite_id/delete
 router.post("/:favourite_id/delete", (req, res) => {
   const userName = req.session.username;
-  favQueries.removeFavouriteById(req.params.favourite_id)
-    .then(dbres => {
-      res.redirect(`/profile/${userName}`);
+  favQueries.removeFavouriteById(req.params.favourite_id).then((dbres) => {
+    res.redirect(`/profile/${userName}`);
+  });
+});
 
-    })
-})
-router.post('/:map_id/add', (req, res) => {
+router.post("/:map_id/add", (req, res) => {
   const userID = req.session.user_id;
-  favQueries.addFavourite(req.params.map_id, userID)
-    .then(dbres => {
-      res.redirect(`/explore/`);
-    })
-})
+  favQueries.addFavourite(req.params.map_id, userID).then((dbres) => {
+    res.redirect(`/explore/`);
+  });
+});
 
+router.post("/addFromMap/:map_id", (req, res) => {
+  const userID = req.session.user_id;
+  favQueries
+    .addFavourite(req.params.map_id, userID)
+    .then((dbres) => {
+      res.status(200).send(dbres);
+    })
+    .catch((err) => {
+      res.status(500).json({ error: err.message });
+    });
+});
 module.exports = router;
