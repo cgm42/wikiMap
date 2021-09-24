@@ -25,10 +25,13 @@ $(() => {
         mymap
       );
       let popupHTML = `
-      <h3>${markerData.title}</h3><br>
-      ${markerData.description}<br>
-      <img src="${markerData.image_url}"/>`;
-      marker.bindPopup(popupHTML);
+      <img class='imgUrl' src="${markerData.image_url}" style="max-height: 300px; max-width: 300px;"/>
+      <h4>${markerData.title}</h4>
+      <p>${markerData.description}</p>
+      `;
+      marker.bindPopup(popupHTML, { maxWidth: "300px" });
+      marker.openPopup();
+      marker.closePopup();
     }
   };
 
