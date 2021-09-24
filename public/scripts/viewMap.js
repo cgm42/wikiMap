@@ -19,16 +19,31 @@ $(() => {
     }
   ).addTo(mymap);
 
+  // =========================
+
   const loadMarkers = (data) => {
     for (markerData of data) {
       var marker = L.marker([markerData.latitude, markerData.longitude]).addTo(
         mymap
       );
       let popupHTML = `
-      <h3>${markerData.title}</h3><br>
-      ${markerData.description}<br>
-      <img src="${markerData.image_url}"/>`;
+          <h3>${markerData.title}</h3><br>
+          ${markerData.description}<br>
+          <img src="${markerData.image_url}"/>`;
       marker.bindPopup(popupHTML);
+      // --------------------
+      L.control
+        .Legend({
+          position: "bottomleft",
+          legends: [
+            {
+              label: "markerData.title",
+              type: "image",
+              url: "https://cdn4.buysellads.net/uu/1/72681/1600362731-MC_Carbon_Logo_260x200.png",
+            },
+          ],
+        })
+        .addTo(mymap);
     }
   };
 
