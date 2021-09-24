@@ -26,24 +26,27 @@ $(() => {
       var marker = L.marker([markerData.latitude, markerData.longitude]).addTo(
         mymap
       );
-      let popupHTML = `
-          <h3>${markerData.title}</h3><br>
-          ${markerData.description}<br>
-          <img src="${markerData.image_url}"/>`;
-      marker.bindPopup(popupHTML);
-      // --------------------
+      let popupHTML = `<img class='imgUrl' src="${markerData.image_url}" style="max-height: 300px; max-width: 300px;"/>
+      <h4>${markerData.title}</h4>
+      <p>${markerData.description}</p>
+      `;
+
       L.control
         .Legend({
           position: "bottomleft",
           legends: [
             {
-              label: "markerData.title",
+              label: markerData.title,
               type: "image",
-              url: "https://cdn4.buysellads.net/uu/1/72681/1600362731-MC_Carbon_Logo_260x200.png",
+              url: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png",
             },
           ],
         })
         .addTo(mymap);
+
+      marker.bindPopup(popupHTML, { maxWidth: "300px" });
+      marker.openPopup();
+      marker.closePopup();
     }
   };
 
