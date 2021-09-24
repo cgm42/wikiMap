@@ -14,6 +14,7 @@ let popupTitle = "";
 let popupUrl = "";
 let mymap;
 let basemap;
+let ctrlCoor;
 
 //Save/update marker on popup close
 const onPopupClose = (e) => {
@@ -90,6 +91,7 @@ const onMarkerClick = (e) => {
 //click anywhere on map to hide menu
 function onMapClick(e) {
   $(".toggle-form, .formwrap, .toggle-bg").removeClass("active");
+  ctrlCoor.setCoordinates(e);
 }
 
 //create a new marker on dblclick

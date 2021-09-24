@@ -9,10 +9,10 @@
   background-color: aqua;
 } */
 
-/* .edit-panel {
-  height: 600px;
-  background-color: aquamarine;
-} */
+.active.list-group-item.list-group-item-action {
+  background-color: rgb(108 117 125) !important;
+  color: white !important;
+}
 #map-editor {
   margin-top: 50%;
 }
@@ -28,6 +28,7 @@
 #basemap-editor {
   width: 203px;
   margin-top: 50%;
+  font-size: 15px;
 }
 #basemap-editor.inactive {
   display: none;
@@ -55,6 +56,9 @@
   position: absolute;
   z-index: 100;
   right: 0;
+}
+#delete-map-button {
+  display: none;
 }
 
 /* editor panel */
