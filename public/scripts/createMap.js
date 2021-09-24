@@ -26,6 +26,9 @@ $(() => {
    * Show create map modal on page load
    */
   $("#myModalHorizontal").modal("show");
+  setTimeout(() => {
+    $("#new-map-title").focus();
+  }, 500);
   $("#create-map-button").on("click", (e) => {
     e.preventDefault();
     mapTitle = $("#new-map-title")[0].value;
