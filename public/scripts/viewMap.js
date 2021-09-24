@@ -19,9 +19,11 @@ $(() => {
     }
   ).addTo(mymap);
 
-  // =========================
+  let ctrlCoor = new L.Control.Coordinates();
+  ctrlCoor.addTo(mymap);
 
   const loadMarkers = (data) => {
+    const legendArr = [];
     for (markerData of data) {
       var marker = L.marker([markerData.latitude, markerData.longitude]).addTo(
         mymap
@@ -30,24 +32,22 @@ $(() => {
       <h4>${markerData.title}</h4>
       <p>${markerData.description}</p>
       `;
-
-      L.control
-        .Legend({
-          position: "bottomleft",
-          legends: [
-            {
-              label: markerData.title,
-              type: "image",
-              url: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png",
-            },
-          ],
-        })
-        .addTo(mymap);
+      legendArr.push({
+        label: markerData.title,
+        type: "image",
+        url: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png",
+      });
 
       marker.bindPopup(popupHTML, { maxWidth: "300px" });
       marker.openPopup();
       marker.closePopup();
     }
+    L.control
+      .Legend({
+        position: "bottomright",
+        legends: legendArr,
+      })
+      .addTo(mymap);
   };
 
   $.ajax({
@@ -58,9 +58,6 @@ $(() => {
       console.log("error");
     },
   });
-
-  let ctrlCoor = new L.Control.Coordinates();
-  ctrlCoor.addTo(mymap);
 
   L.easyButton("fa-star", function () {
     console.log("clicked");
