@@ -19,6 +19,8 @@ $(() => {
     }
   ).addTo(mymap);
 
+  mymap.addControl(new L.Control.Fullscreen());
+
   let ctrlCoor = new L.Control.Coordinates();
   ctrlCoor.addTo(mymap);
 
