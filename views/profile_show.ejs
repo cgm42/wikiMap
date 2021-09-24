@@ -14,8 +14,7 @@
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
-    <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+
     <link rel="stylesheet" href="/styles/header.css" type="text/css" />
     <link rel="stylesheet" href="/styles/footer.css" type="text/css" />
     <link rel="stylesheet" href="/styles/profile.css" type="text/css" />
@@ -64,7 +63,24 @@
                     role="group"
                     aria-label="Basic example"
                   >
+                  <% if (maps[map].creator_id === sessionId) {%>
                     <div>
+                      <form method="GET" action="/maps/<%=maps[map].id%>">
+                        <button
+                          type="submit"
+                          class="
+                            btn
+                            glow-on-hover
+                            justify-content-start
+                            viewbtn
+                          "
+                        >
+                          Edit
+                        </button>
+                      </form>
+                    </div>
+                    <%} else {%>
+                      <div>
                       <form method="GET" action="/maps/<%=maps[map].id%>">
                         <button
                           type="submit"
@@ -79,6 +95,7 @@
                         </button>
                       </form>
                     </div>
+                  <%}%>
                     <% if (maps[map].creator_id === sessionId) {%>
                     <div>
                       <form
@@ -138,7 +155,27 @@
                       role="group"
                       aria-label="Basic example"
                     >
+                    <% if (favourites[fav].user_id === sessionId) {%>
                       <div>
+                        <form
+                          method="GET"
+                          action="/maps/<%=favourites[fav].map_id%>"
+                        >
+                          <button
+                            type="submit"
+                            class="
+                              btn
+                              glow-on-hover
+                              justify-content-start
+                              viewbtn
+                            "
+                          >
+                            Edit
+                          </button>
+                        </form>
+                      </div>
+                      <%} else {%>
+                        <div>
                         <form
                           method="GET"
                           action="/maps/<%=favourites[fav].map_id%>"
@@ -156,6 +193,7 @@
                           </button>
                         </form>
                       </div>
+                        <%}%>
                       <% if (favourites[fav].user_id === sessionId) {%>
                       <div>
                         <form
