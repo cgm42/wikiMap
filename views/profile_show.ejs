@@ -3,7 +3,7 @@
   <head>
     <title>Profile - WikiMap</title>
 
-    <link rel="shortcut icon" type="image/jpg" href="/images/favicon.ico"/>
+    <link rel="shortcut icon" type="image/jpg" href="/images/favicon.ico" />
 
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -19,7 +19,6 @@
     <link rel="stylesheet" href="/styles/footer.css" type="text/css" />
     <link rel="stylesheet" href="/styles/profile.css" type="text/css" />
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-
   </head>
   <body>
     <%- include('partials/_header') %>
@@ -63,7 +62,7 @@
                     role="group"
                     aria-label="Basic example"
                   >
-                  <% if (maps[map].creator_id === sessionId) {%>
+                    <% if (maps[map].creator_id === sessionId) {%>
                     <div>
                       <form method="GET" action="/maps/<%=maps[map].id%>">
                         <button
@@ -80,7 +79,7 @@
                       </form>
                     </div>
                     <%} else {%>
-                      <div>
+                    <div>
                       <form method="GET" action="/maps/<%=maps[map].id%>">
                         <button
                           type="submit"
@@ -95,8 +94,7 @@
                         </button>
                       </form>
                     </div>
-                  <%}%>
-                    <% if (maps[map].creator_id === sessionId) {%>
+                    <%}%> <% if (maps[map].creator_id === sessionId) {%>
                     <div>
                       <form
                         method="POST"
@@ -155,27 +153,8 @@
                       role="group"
                       aria-label="Basic example"
                     >
-                    <% if (favourites[fav].user_id === sessionId) {%>
+                      <% if (favourites[fav].user_id === sessionId) {%>
                       <div>
-                        <form
-                          method="GET"
-                          action="/maps/<%=favourites[fav].map_id%>"
-                        >
-                          <button
-                            type="submit"
-                            class="
-                              btn
-                              glow-on-hover
-                              justify-content-start
-                              viewbtn
-                            "
-                          >
-                            Edit
-                          </button>
-                        </form>
-                      </div>
-                      <%} else {%>
-                        <div>
                         <form
                           method="GET"
                           action="/maps/<%=favourites[fav].map_id%>"
@@ -193,8 +172,26 @@
                           </button>
                         </form>
                       </div>
-                        <%}%>
-                      <% if (favourites[fav].user_id === sessionId) {%>
+                      <%} else {%>
+                      <div>
+                        <form
+                          method="GET"
+                          action="/maps/<%=favourites[fav].map_id%>"
+                        >
+                          <button
+                            type="submit"
+                            class="
+                              btn
+                              glow-on-hover
+                              justify-content-start
+                              viewbtn
+                            "
+                          >
+                            View
+                          </button>
+                        </form>
+                      </div>
+                      <%}%> <% if (favourites[fav].user_id === sessionId) {%>
                       <div>
                         <form
                           method="POST"
