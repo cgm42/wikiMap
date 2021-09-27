@@ -13,12 +13,12 @@ WikiMap is designed for mobile devices, tablets and desktops. Its layout can ada
 
 ### Landing page, profile page and explore page
 
-<img src="./docs/WikiMap_demo2.gif" alt="Landing, profile and explore pages" width="700"/>
+<img src="./docs/wikiMap_demo2.gif" alt="Landing page" width="800"/>
 
 ### Creating a map and adding a marker
 
-<img src="./docs/WikiMap_demo_marker2.gif" alt="Landing, profile and explore pages" width="700"/>
+<img src="./docs/WikiMap_demo_marker2.gif" alt="Landing, profile and explore pages" width="800"/>
 
 ### Switching basemaps
 
-<img src="./docs/WikiMap_demo_basemaps2.gif" alt="Landing, profile and explore pages" width="700"/>
+<img src="./docs/WikiMap_demo_basemaps2.gif" alt="Landing, profile and explore pages" width="800"/>
